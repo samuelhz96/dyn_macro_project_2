@@ -1,0 +1,48 @@
+Starting preprocessing of the model file ...
+Found 8 equation(s).
+Evaluating expressions...done
+Computing static model derivatives (order 1).
+Computing dynamic model derivatives (order 1).
+Processing outputs ...
+done
+Preprocessing completed.
+
+STEADY-STATE RESULTS:
+
+z      		 1
+k      		 60.6285
+U      		 0.647029
+c      		 4.64641
+i      		 -0.899306
+deltaT 		 0.0148331
+x      		 0
+y      		 3.74711
+
+EIGENVALUES:
+         Modulus             Real        Imaginary
+
+               0               -0                0
+       2.401e-17       -2.401e-17                0
+       3.665e-16        3.665e-16                0
+             0.9              0.9                0
+          0.9942           0.9939          0.02094
+          0.9942           0.9939         -0.02094
+
+
+There are 0 eigenvalue(s) larger than 1 in modulus 
+for 1 forward-looking variable(s)
+
+The rank condition ISN'T verified!
+
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('print_info', 'C:\dynare\4.6.4\matlab\print_info.m', 32)" style="font-weight:bold">print_info</a> (<a href="matlab: opentoline('C:\dynare\4.6.4\matlab\print_info.m',32,0)">line 32</a>)
+Blanchard & Kahn conditions are not satisfied: indeterminacy.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('stoch_simul', 'C:\dynare\4.6.4\matlab\stoch_simul.m', 107)" style="font-weight:bold">stoch_simul</a> (<a href="matlab: opentoline('C:\dynare\4.6.4\matlab\stoch_simul.m',107,0)">line 107</a>)
+    print_info(info, options_.noprint, options_);
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('Project02_dynaire.driver', 'C:\Users\samue\Downloads\Studium\Economics (Master - Vienna)\2. Semester\Dynamic Macroeconomics with Numerics\Project 2\+Project02_dynaire\driver.m', 208)" style="font-weight:bold">Project02_dynaire.driver</a> (<a href="matlab: opentoline('C:\Users\samue\Downloads\Studium\Economics (Master - Vienna)\2. Semester\Dynamic Macroeconomics with Numerics\Project 2\+Project02_dynaire\driver.m',208,0)">line 208</a>)
+[info, oo_, options_, M_] = stoch_simul(M_, options_, oo_, var_list_);
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('dynare', 'C:\dynare\4.6.4\matlab\dynare.m', 293)" style="font-weight:bold">dynare</a> (<a href="matlab: opentoline('C:\dynare\4.6.4\matlab\dynare.m',293,0)">line 293</a>)
+evalin('base',[fname '.driver']) ;
+} 
