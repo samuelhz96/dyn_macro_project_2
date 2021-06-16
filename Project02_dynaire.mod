@@ -20,12 +20,12 @@ rho = 0.9;
 %--------------------------------------------------------------------------
 
 model;
-k(+1) = (1-delta*U^(phi))*k + i;
+k = (1-deltaT(-1))*k(-1) + (exp((1-alpha)*rho*x(-1)+(1-alpha)*e)*(((1-deltaT(-1))*k(-1) + i(-1))*U)^(alpha)-c);
 x = rho*x(-1)+e;
 z = exp(rho*x(-1)+e);
 U = ((phi*delta)^(-1)*alpha*z(-1)^(1-alpha)*k^(alpha-1))^((phi-alpha)^(-1));
-c = beta*c(-1)*(alpha*U*(z)^(1-alpha)*(k*U)^(alpha-1)+1-delta*U^phi);
-i = (exp((1-alpha)*rho*x(-1)+(1-alpha)*e)*(k*U)^(alpha)-c);
+c(+1) = beta*c*(alpha*U(+1)*(z(+1))^(1-alpha)*(k(+1)*U(+1))^(alpha-1)+1-deltaT(+1));
+i = (exp((1-alpha)*rho*x(-1)+(1-alpha)*e)*(((1-deltaT(-1))*k(-1) + i(-1))*U)^(alpha)-c);
 deltaT = delta*U^phi;
 y = c+i;
 end;
