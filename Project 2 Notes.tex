@@ -1,0 +1,90 @@
+\documentclass[a4paper]{article}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage[utf8]{inputenc}
+\usepackage[official]{eurosym}
+\usepackage[left=2cm, right=2cm, top=2cm]{geometry} %right=30mm,left=30mm,top=15mm,bottom=20mm für die Bachelorarbeit/Seminararbeit
+\usepackage{graphicx} % support the \includegraphics command and options
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{adjustbox}
+\usepackage{mathtools}
+\usepackage{centernot}
+\usepackage[parfill]{parskip} % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{booktabs} % for much better looking tables
+\usepackage{array} % for better arrays (eg matrices) in maths
+\usepackage{paralist}% very flexible & customisable lists (eg. enumerate/itemize, etc.)
+\usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
+\usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{perpage}
+\usepackage{hyperref}
+\usepackage[perpage,symbol*]{footmisc}
+\usepackage{chngcntr}
+\usepackage{amsthm}
+\usepackage{makecell}
+\usepackage{csquotes}
+\usepackage{lastpage}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{patterns}
+\makeatletter
+\renewcommand{\@seccntformat}[1]{}
+\makeatother
+\allowdisplaybreaks
+\linespread{1.1}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Samuel}
+\rhead{Page \thepage \hspace{1pt} of \pageref{LastPage}}
+\chead{Project II}
+\title{Dynamic Macroeconomics with Numerics: Project II}
+\author{Samuel}
+\date{\today}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{exmp}{Example}[section]
+\newtheorem{note}{Note}[section]
+\newcommand\Tau{\mathcal{T}}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcommand*\diff{\mathop{}\!\mathrm{d}} %Integral d 
+\newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+\hypersetup{colorlinks, citecolor=black, filecolor=black, linkcolor=black, urlcolor=black} %%for links to not be visible 
+\begin{document}
+\maketitle
+\newpage
+\section{One-Sector Stochastic Growth Model}
+\subsection*{Notes on optimality conditions}
+We have the technology given by
+	\begin{align*}
+	z_{t+1} 	&= \exp(x_{t+1}) = \exp(\rho x_{t} + \epsilon_{t+1}) \\
+	z_t 		&= \exp(x_t)	= \exp(\rho x_{t-1}+\epsilon_t).
+	\end{align*}
+We can solve the latter one for $\rho$:
+	\begin{align*}
+	\log z_t - \epsilon_t  = \rho x_{t-1} \Leftrightarrow \rho = \frac{\log z_t - \epsilon_t}{x_{t-1}},
+	\end{align*}	
+which we can plug into $z_{t+1}$ 
+	\begin{align*}
+	z_{t+1} = \exp\bigg( \frac{x_t}{x_{t-1}}(\log z_t - \epsilon_t) + \epsilon_{t+1} \bigg)
+	\end{align*}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

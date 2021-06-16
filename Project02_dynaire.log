@@ -10,39 +10,83 @@ Preprocessing completed.
 STEADY-STATE RESULTS:
 
 z      		 1
-k      		 60.6285
-U      		 0.647029
-c      		 4.64641
-i      		 -0.899306
-deltaT 		 0.0148331
-x      		 0
-y      		 3.74711
+k      		 60.6232
+U      		 0.647061
+c      		 2.84776
+i      		 0.899294
+deltaT 		 0.0148341
+x      		 9.77849e-23
+y      		 3.74706
 
 EIGENVALUES:
          Modulus             Real        Imaginary
 
-               0               -0                0
-       2.401e-17       -2.401e-17                0
-       3.665e-16        3.665e-16                0
+       1.841e-16        1.841e-16                0
              0.9              0.9                0
-          0.9942           0.9939          0.02094
-          0.9942           0.9939         -0.02094
+          0.9864           0.9864                0
+           1.021            1.021                0
 
 
-There are 0 eigenvalue(s) larger than 1 in modulus 
+There are 1 eigenvalue(s) larger than 1 in modulus 
 for 1 forward-looking variable(s)
 
-The rank condition ISN'T verified!
+The rank condition is verified.
 
-{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('print_info', 'C:\dynare\4.6.4\matlab\print_info.m', 32)" style="font-weight:bold">print_info</a> (<a href="matlab: opentoline('C:\dynare\4.6.4\matlab\print_info.m',32,0)">line 32</a>)
-Blanchard & Kahn conditions are not satisfied: indeterminacy.
 
-Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('stoch_simul', 'C:\dynare\4.6.4\matlab\stoch_simul.m', 107)" style="font-weight:bold">stoch_simul</a> (<a href="matlab: opentoline('C:\dynare\4.6.4\matlab\stoch_simul.m',107,0)">line 107</a>)
-    print_info(info, options_.noprint, options_);
+MODEL SUMMARY
 
-Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('Project02_dynaire.driver', 'C:\Users\samue\Downloads\Studium\Economics (Master - Vienna)\2. Semester\Dynamic Macroeconomics with Numerics\Project 2\+Project02_dynaire\driver.m', 208)" style="font-weight:bold">Project02_dynaire.driver</a> (<a href="matlab: opentoline('C:\Users\samue\Downloads\Studium\Economics (Master - Vienna)\2. Semester\Dynamic Macroeconomics with Numerics\Project 2\+Project02_dynaire\driver.m',208,0)">line 208</a>)
-[info, oo_, options_, M_] = stoch_simul(M_, options_, oo_, var_list_);
+  Number of variables:         8
+  Number of stochastic shocks: 1
+  Number of state variables:   3
+  Number of jumpers:           1
+  Number of static variables:  4
 
-Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('dynare', 'C:\dynare\4.6.4\matlab\dynare.m', 293)" style="font-weight:bold">dynare</a> (<a href="matlab: opentoline('C:\dynare\4.6.4\matlab\dynare.m',293,0)">line 293</a>)
-evalin('base',[fname '.driver']) ;
-} 
+
+MATRIX OF COVARIANCE OF EXOGENOUS SHOCKS
+Variables           e
+e            0.000500
+
+POLICY AND TRANSITION FUNCTIONS
+                                   z               k               U               c               i          deltaT               x               y
+Constant                    1.000000       60.623227        0.647061        2.847763        0.899294        0.014834               0        3.747057
+z(-1)                              0       -1.058547        0.369605       -0.022291        0.769261        0.012710               0        0.746969
+c(-1)                              0       46.838893       -0.280665        0.986359       -0.529243       -0.009652               0        0.457115
+x(-1)                       0.900000      -11.353823        0.068034        0.039537        2.007962        0.002340        0.900000        2.047499
+e                           1.000000      -12.615359        0.075593        0.043930        2.231069        0.002599        1.000000        2.274999
+
+
+MOMENTS OF SIMULATED VARIABLES
+VARIABLE              MEAN       STD. DEV.        VARIANCE        SKEWNESS        KURTOSIS
+z                 0.987899        0.050891        0.002590       -0.035279        0.186763
+k                59.907272        1.148590        1.319260        0.330302        0.592352
+U                 0.646917        0.020907        0.000437       -0.330351        0.332113
+c                 2.828940        0.024902        0.000620        0.079938        0.091487
+i                 0.872867        0.145974        0.021308       -0.115039        0.194098
+deltaT            0.014829        0.000719        0.000001       -0.330351        0.332113
+x                -0.012101        0.050891        0.002590       -0.035279        0.186763
+y                 3.701807        0.155149        0.024071        0.023421        0.193009
+
+
+CORRELATION OF SIMULATED VARIABLES
+VARIABLE         z       k       U       c       i  deltaT       x       y
+z           1.0000 -0.2797  0.8905  0.3611  0.9914  0.8905  1.0000  0.9907
+k          -0.2797  1.0000 -0.4960  0.7944 -0.3423 -0.4960 -0.2797 -0.1946
+U           0.8905 -0.4960  1.0000  0.0817  0.9423  1.0000  0.8905  0.8997
+c           0.3611  0.7944  0.0817  1.0000  0.2947  0.0817  0.3611  0.4378
+i           0.9914 -0.3423  0.9423  0.2947  1.0000  0.9423  0.9914  0.9882
+deltaT      0.8905 -0.4960  1.0000  0.0817  0.9423  1.0000  0.8905  0.8997
+x           1.0000 -0.2797  0.8905  0.3611  0.9914  0.8905  1.0000  0.9907
+y           0.9907 -0.1946  0.8997  0.4378  0.9882  0.8997  0.9907  1.0000
+
+
+AUTOCORRELATION OF SIMULATED VARIABLES
+VARIABLE         1       2       3       4       5
+z           0.9020  0.8072  0.7136  0.6358  0.5713
+k           0.9650  0.9308  0.8963  0.8665  0.8408
+U           0.9210  0.8133  0.7101  0.6223  0.5505
+c           0.9977  0.9947  0.9904  0.9848  0.9783
+i           0.9337  0.8305  0.7319  0.6471  0.5774
+deltaT      0.9210  0.8133  0.7101  0.6223  0.5505
+x           0.9020  0.8072  0.7136  0.6358  0.5713
+y           0.9395  0.8456  0.7557  0.6781  0.6141
+Total computing time : 0h00m03s

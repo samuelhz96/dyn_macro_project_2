@@ -20,14 +20,14 @@ rho = 0.9;
 %--------------------------------------------------------------------------
 
 model;
-k = (1-delta*U(-1)^(phi))*k(-1) - i(-1);
+k(+1) = (1-delta*U^(phi))*k + i;
 x = rho*x(-1)+e;
 z = exp(rho*x(-1)+e);
 U = ((phi*delta)^(-1)*alpha*z(-1)^(1-alpha)*k^(alpha-1))^((phi-alpha)^(-1));
-y = exp(rho*x(-1)+e)^(1-alpha)*(k*U)^(alpha);
 c = beta*c(-1)*(alpha*U*(z)^(1-alpha)*(k*U)^(alpha-1)+1-delta*U^phi);
-i = (exp(rho*x(-1)+e)^(1-alpha)*(k*U)^(alpha)-c);
+i = (exp((1-alpha)*rho*x(-1)+(1-alpha)*e)*(k*U)^(alpha)-c);
 deltaT = delta*U^phi;
+y = c+i;
 end;
 
 %--------------------------------------------------------------------------
@@ -42,7 +42,7 @@ c = 2.8478;
 k= 60.6232;
 deltaT = 0.0148;
 x = 0;
-y = 3.7471;
+y = 2.8478+0.8993;
 end;
 
 steady(solve_algo=1);
@@ -57,5 +57,5 @@ var e;
 stderr (0.0005)^(0.5);
 end;
 
-stoch_simul(order=1,irf=1000,periods=1000);
+stoch_simul(order=1, periods = 1000, irf = 1000);
 rplot y c i k;
