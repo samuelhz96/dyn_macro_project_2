@@ -58,49 +58,6 @@
 \newpage
 \section{One-Sector Stochastic Growth Model}
 \subsection*{Notes on optimality conditions}
-We have
-	\begin{align*}
-	\mathbf X_{t+1} = 
-		\begin{pmatrix}
-		c_{t+1} \\ k_{t+1} \\ U_{t+1} \\ z_{t+1} 
-		\end{pmatrix}
-	= f(\mathbf X_t) = 
-		\begin{pmatrix}
-		c_t \beta \Big\{ \alpha (\rho x_t + \epsilon_{t+1})^{1-\alpha}U_{t+1}^\alpha k_{t+1}^{\alpha-1} + 1 - \delta U_{t+1}^\phi \Big\} \\
-		k_t - \delta U_t^\phi k_t + i_t \\
-		\Big\{ (\delta\phi)^{-1}\alpha \exp(\rho x_t + \epsilon_{t+1})^{1-\alpha}(k_t - \delta U_t^\phi k_t + i_t)^{\alpha-1} \Big\}^{\frac{1}{\phi-\alpha}} \\
-		\rho x_t + \epsilon_{t+1}
-		\end{pmatrix}	
-	\end{align*}
-We now express all terms in terms of past values:
-	\begin{align*}
-	z_{t+1} 	&= \exp(\rho x_t+\epsilon_{t+1}) \\
-	k_{t+1}	&= (1-\delta U_t^\phi)k_t + z_{t}^{1-\alpha} k_{t}^{\alpha} U_{t}^{\alpha} - \beta c_t \bigg\{ \alpha U_{t} z_{t}^{1-\alpha} k_{t}^{\alpha-1} U_{t}^{\alpha}+1-\delta U_{t}^{\phi} \bigg\} \\
-				&= \bigg( 1- \bigg\{ \frac{\alpha}{\delta\phi} z_t^{1-\alpha} k_t^{\alpha-1} \bigg\}^{\frac{1}{\phi-\alpha}} \bigg)k_t + z_{t}^{1-\alpha} k_{t}^{\alpha} U_{t}^{\alpha} - \beta c_t \bigg\{ \alpha U_{t} z_{t}^{1-\alpha} k_{t}^{\alpha-1} U_{t}^{\alpha}+1-\delta U_{t}^{\phi} \bigg\}  \\
-				&= k_t - k_t^{\frac{\phi-1}{\phi-\alpha}} \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{1}{\phi-\alpha}} z_t^{\frac{1-\alpha}{\phi-\alpha}} + z_{t}^{1-\alpha} k_{t}^{\alpha} U_{t}^{\alpha} - \beta c_t \bigg\{ \alpha U_{t} z_{t}^{1-\alpha} k_{t}^{\alpha-1} U_{t}^{\alpha}+1-\delta U_{t}^{\phi} \bigg\} \\
-	U_{t+1}	&= \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{1}{\phi-\alpha}} \exp(\rho x_t + \epsilon_{t+1})^{\frac{1-\alpha}{\phi-\alpha}} \Big( k_t - k_t^{\frac{\phi-1}{\phi-\alpha}} \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{1}{\phi-\alpha}} z_t^{\frac{1-\alpha}{\phi-\alpha}} + z_{t}^{1-\alpha} k_{t}^{\alpha} U_{t}^{\alpha} - \beta c_t \bigg\{ \alpha U_{t} z_{t}^{1-\alpha} k_{t}^{\alpha-1} U_{t}^{\alpha}+1-\delta U_{t}^{\phi} \bigg\} \Big)^{\frac{\alpha-1}{\phi-\alpha}} \\
-	c_{t+1}	&= c_t \beta \Big\{ \alpha (\rho x_t + \epsilon_{t+1})^{1-\alpha}U_{t+1}^\alpha k_{t+1}^{1-\alpha} + 1 - \delta U_{t+1}^\phi\\
-	i_{t+1}	&= z_{t+1}^{1-\alpha} k_{t+1}^{\alpha} U_{t+1}^{\alpha} - \beta c_t \bigg\{ \alpha U_{t+1} z_{t+1}^{1-\alpha} k_{t+1}^{\alpha-1} U_{t+1}^{\alpha}+1-\delta U_{t+1}^{\phi} \bigg\} \\
-	y_{t+1}	&= z_{t+1}^{1-\alpha} (k_{t+1}U_{t+1})^\alpha
-	\end{align*}
-Important here are the partial derivatives of the the first three terms w.r.t.\ all past terms:
-	\begin{align*}
-	\frac{\partial}{\partial z_t}k_{t+1} 	&= - \frac{1-\alpha}{\phi-\alpha}k_t^{\frac{\phi-1}{\phi-\alpha}}\Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{1}{\phi-\alpha}}z_t^{\frac{1-\phi}{\phi-\alpha}}+(1-\alpha)\Big( \frac{k_t U_t}{z_t} \Big)^{\alpha} - \beta c_t (1-\alpha)z_t^{-\alpha} U_t^{1+\alpha}k_t^{\alpha-1} \\
-	\frac{\partial}{\partial k_t}k_{t+1}	&= 1 - \frac{\phi-1}{\phi-\alpha}k_t^{\frac{\alpha-1}{\phi-\alpha}}\Big(\frac{\alpha}{\delta\phi}\Big)^{\frac{1}{\phi-\alpha}}z_t^{\frac{1-\alpha}{\phi-\alpha}} + \alpha z_t^{1-\alpha}k_t^{\alpha-1}U_t^\alpha - \beta c_t \alpha U_t^{1+\alpha} z_t^{1-\alpha}k_t^{\alpha-2} \\
-	\frac{\partial}{\partial U_t}k_{t+1}	&= \alpha z_t^{1-\alpha}k_t^{\alpha} U_t^{\alpha-1} - \beta c_t \bigg\{ \alpha(1+\alpha)z_t^{1-\alpha}k_t^{\alpha-1} U_t^{\alpha}- \delta \phi U_t^{\phi-1} \bigg\} \\
-	\frac{\partial}{\partial c_t}k_{t+1} 	&= \beta \bigg\{ \alpha z_t^{1-\alpha}k_t^{\alpha-1}U_t^{1+\alpha}+1-\delta U_t^\phi \bigg\} \\
-	\frac{\partial}{\partial i_t}k_{t+1}	&= 1\\
-	\frac{\partial}{\partial y_t}k_{t+1}	&= 1-\beta c_t (??)
-	\end{align*}
-as we have $k_{t+1} = [\dots]+y_t - \beta c_t \frac{\partial}{\partial k_t}y_t + [\dots]$	????
-
-Next we have
-	\begin{align*}
-	\frac{\partial}{\partial z_t}U_{t+1} 	&= \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{1}{\phi-\alpha}} z_{t+1}^{\frac{1-\alpha}{\phi-\alpha}}\bigg\{ (1-\alpha)\Big( \frac{k_t U_t}{z_t} \Big)^\alpha  - \frac{1-\alpha}{\phi-\alpha}k_t^{\frac{\phi-1}{\phi-\alpha}}\Big( \frac{\alpha}{\delta \phi} \Big)^{\frac{1}{\phi-\alpha}}z_t^{\frac{1-\phi}{\phi-\alpha}} - \beta c_t \alpha(1-\alpha)\Big( \frac{U_t}{z_t} \Big)^\alpha k_t^{\alpha-1} \bigg\} \\
-	&\quad\quad  \bigg\{ k_t - k_t^{\frac{\phi-1}{\phi-\alpha}} \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{1}{\phi-\alpha}} z_t^{\frac{1-\alpha}{\phi-\alpha}} + z_{t}^{1-\alpha} k_{t}^{\alpha} U_{t}^{\alpha} - \beta c_t \bigg\{ \alpha U_{t} z_{t}^{1-\alpha} k_{t}^{\alpha-1} U_{t}^{\alpha}+1-\delta U_{t}^{\phi} \bigg\} \bigg\}^{\frac{2\alpha-1-\phi}{\phi-\alpha}}\frac{\alpha-1}{\phi-\alpha} \\
-	\frac{\partial}{\partial k_t}U_{t+1}	&= \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{1}{\phi-\alpha}} z_{t+1}^{\frac{1-\alpha}{\phi-\alpha}} \dots \text{fuck me}
-	\end{align*}
-\newpage
 We have the Euler error given by
 	\begin{align*}
 	V_t = c_{t+1} - \beta c_t [f_{k_{t+1}}(k_{t+1},U_{t+1},z_{t+1})+1-\delta_{t+1}(k_{t+1})], \\
