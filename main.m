@@ -76,6 +76,49 @@ cbar;
 ybar == cbar + ibar
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Project 2: Part a: State Space Approach Policy Function %%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-(x.*U).^(P.alpha)-((P.beta.*cbar).*(P.alpha.*U.*(x.*U).^(P.alpha-1)+1-P.delta.*U.^(P.phi)))
+% Save the steady state value for capital from the root finding method
+kss = x;
+
+% Shortcut for often used term
+adp = P.alpha./(P.delta.*P.phi);
+
+% Steady state consumption as function of steady state capital and parameters
+cSS = @(kss) kss.^(P.alpha+(((P.alpha-1).*P.alpha)/(P.phi-P.alpha))).*(adp).^(P.alpha./(P.phi-P.alpha))-P.delta.*(adp).^(P.phi./(P.phi-P.alpha)).*kss.^(1+(((P.alpha-1).*P.phi)/(P.phi-P.alpha)));
+
+% Steady state output as function of steady state capital and parameters
+dySS = @(kss) P.alpha.*adp.^(P.alpha./(P.phi-P.alpha)).*kss.^(P.alpha-1+(((P.alpha-1).*P.alpha)./(P.phi-P.alpha)));
+
+% Steady state depreciation as function of steady state capital and parameters
+deltaSS = @(kss) P.delta.*adp.^(P.phi./(P.phi-P.alpha)).*kss.^(((P.alpha-1).*P.phi)/(P.phi-P.alpha));
+
+% Step 1: 
+% Partial derivatives of consumption in period t+1 at steady state
+dcttdkt = @(kss) 0.*kss         % not actually needed but for completeness
+dcttdktt = @(kss) (P.alpha+(((P.alpha-1).*P.alpha)/(P.phi-P.alpha))).*adp.^(P.alpha./(P.phi-P.alpha)).*kss.^(P.alpha-1+(((P.alpha-1).*P.alpha)./(P.phi-P.alpha)))-P.delta.*adp.^(P.phi./(P.phi-P.alpha)).*(1+(((P.alpha-1).*P.phi)/(P.phi-P.alpha))).*kss.^(((P.alpha-1).*P.phi)/(P.phi-P.alpha))
+dcttdkttt = @(kss) -kss./kss;
+dcttdzt = @(kss) 0.*kss;
+dcttdztt = @(kss) (1-P.alpha+(((1-P.alpha).*P.alpha)/(P.phi-P.alpha))).*adp.^(P.alpha./(P.phi-P.alpha)).*kss.^(P.alpha+(((P.alpha-1).*P.alpha)/(P.phi-P.alpha)))-P.delta.*adp.^(P.phi/(P.phi-P.alpha)).*(((1-P.alpha).*P.phi)/(P.phi-P.alpha)).*kss.^(1+(((P.alpha-1).*P.phi)/(P.phi-P.alpha)));
+
+% Step 2: 
+% Partial derivatives of consumption in period t at steady state
+dctdkt = @(kss) (P.alpha+(((1-P.alpha).*P.alpha)/(P.phi-P.alpha))).*adp.^(P.alpha./(P.phi-P.alpha)).*kss.^(P.alpha-1+(((P.alpha-1).*P.alpha)/(P.phi-P.alpha)))+1-delta.*adp.^(P.phi./(P.phi-P.alpha)).*((((P.alpha-1).*P.phi)/(P.phi-P.alpha)));
+dctdktt = @(kss) -kss./kss;
+dctdkttt = @(kss) 0.*kss;
+%dctdzt = @(kss) 
+dctdztt = @(kss) 0.*kss;
+
+
+% TODO: everything from here on plus one from above!
+
+
+
+
+
+
+
+
 
