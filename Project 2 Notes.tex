@@ -96,7 +96,7 @@ We can put together all terms and have
 Now we can take the partial derivatives:
 	\begin{align*}
 	\frac{\partial}{\partial k_{t+2}}V_t 									&= -1  \\
-	\frac{\partial}{\partial k_{t+2}}V_t |_{k_{t}=k^*,z_{t}=z^*} 	&= -1 
+	V_3 	&= -1 
 	\end{align*}	
 Next we have	
 	\begin{align*}
@@ -109,7 +109,7 @@ Next we have
 												& \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}} \Big( \frac{(\alpha-1)\alpha}{\phi-\alpha} \Big)z_{t+1}^{\frac{(1-\alpha)\alpha}{\phi-\alpha}}k_{t+1}^{\frac{(\alpha-1)\alpha}{\phi-\alpha}-1} \\
 												&- \beta \delta \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}}z_{t+1}^{\frac{(1-\alpha)\phi}{\phi-\alpha}}k_{t+1}^{\frac{(\alpha-1)\phi}{\phi-\alpha}}
 	\intertext{and evaluated at the steady state this is}
-	\frac{\partial}{\partial k_{t+1}}V_* 	&= \Big( \alpha+\frac{(\alpha-1)\alpha}{\phi-\alpha} \Big)k_{*}^{\alpha-1+\frac{(\alpha-1)\alpha}{\phi-\alpha}}\Big( \frac{\alpha}{\delta\phi}\Big)^{\frac{\alpha}{\phi-\alpha}} + 1 - \delta \Big( 1+\frac{(\alpha-1)\alpha}{\phi-\alpha} \Big)\Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}}k_{*}^{\frac{(\alpha-1)\alpha}{\phi-\alpha}} \\
+	V_2 	&= \Big( \alpha+\frac{(\alpha-1)\alpha}{\phi-\alpha} \Big)k_{*}^{\alpha-1+\frac{(\alpha-1)\alpha}{\phi-\alpha}}\Big( \frac{\alpha}{\delta\phi}\Big)^{\frac{\alpha}{\phi-\alpha}} + 1 - \delta \Big( 1+\frac{(\alpha-1)\alpha}{\phi-\alpha} \Big)\Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}}k_{*}^{\frac{(\alpha-1)\alpha}{\phi-\alpha}} \\
 												&- \beta \Big\{ k_{*}^{\alpha+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}} - \delta \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}}k_{*}^{1+\frac{(\alpha-1)\phi}{\phi-\alpha}} \Big\} \cdot \alpha \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}}\Big( \alpha-1+\frac{(\alpha-1)\alpha}{\phi-\alpha} \Big)k_{*}^{\alpha-2+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \\ 
 												&- (-1)\alpha \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}} k_{*}^{\alpha-1+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \\
 												&- \beta (-1) \\
@@ -124,7 +124,7 @@ The next derivative is given by
 												&+ \beta \Big\{ \Big( {\alpha+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \Big) z_{t}^{1-\alpha+\frac{(1-\alpha)\alpha}{\phi-\alpha}} k_{t}^{\alpha-1+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}} + 1 - \delta \Big( {1+\frac{(\alpha-1)\phi}{\phi-\alpha}} \Big) \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}}z_{t}^{\frac{(1-\alpha)\phi}{\phi-\alpha}}k_{t}^{\frac{(\alpha-1)\phi}{\phi-\alpha}} \Big\}\\
 												& \delta \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}}z_{t+1}^{\frac{(1-\alpha)\alpha}{\phi-\alpha}}k_{t+1}^{\frac{(\alpha-1)\alpha}{\phi-\alpha}}
 	\intertext{and evaluated at the steady state this is}
-	\frac{\partial}{\partial k_t}V_* 		&= \beta \Big\{ \Big( {\alpha+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \Big)  k_{*}^{\alpha-1+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}} + 1 - \delta \Big( {1+\frac{(\alpha-1)\phi}{\phi-\alpha}} \Big) \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}}k_{*}^{\frac{(\alpha-1)\phi}{\phi-\alpha}} \Big\} \alpha \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}}k_{*}^{\alpha-1+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \\
+	V_1 		&= \beta \Big\{ \Big( {\alpha+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \Big)  k_{*}^{\alpha-1+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}} + 1 - \delta \Big( {1+\frac{(\alpha-1)\phi}{\phi-\alpha}} \Big) \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}}k_{*}^{\frac{(\alpha-1)\phi}{\phi-\alpha}} \Big\} \alpha \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}}k_{*}^{\alpha-1+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \\
 												&- \beta \Big\{ \Big( {\alpha+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \Big)  k_{*}^{\alpha-1+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}} + 1 - \delta \Big( {1+\frac{(\alpha-1)\phi}{\phi-\alpha}} \Big) \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}} k_{*}^{\frac{(\alpha-1)\phi}{\phi-\alpha}} \Big\} \\
 												&+ \beta \Big\{ \Big( {\alpha+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \Big) k_{*}^{\alpha-1+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}} + 1 - \delta \Big( {1+\frac{(\alpha-1)\phi}{\phi-\alpha}} \Big) \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}}k_{*}^{\frac{(\alpha-1)\phi}{\phi-\alpha}} \Big\} \delta \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}}k_{*}^{\frac{(\alpha-1)\alpha}{\phi-\alpha}}											
 	\end{align*}	
@@ -136,7 +136,7 @@ Next we have the derivatives w.r.t.\ the technology shocks
 												&\cdot \alpha \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}} \Big( 1-\alpha+\frac{(1-\alpha)\alpha}{\phi-\alpha} \Big)z_{t+1}^{\frac{(1-\alpha)\alpha}{\phi-\alpha}-\alpha}k_{t+1}^{\alpha-1+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \\
 												&- \beta \Big\{ z_{t}^{1-\alpha+\frac{(1-\alpha)\alpha}{\phi-\alpha}} k_{t}^{\alpha+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}}-k_{t+1} + k_{t} - \delta \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}}z_{t}^{\frac{(1-\alpha)\phi}{\phi-\alpha}}k_{t}^{1+\frac{(\alpha-1)\phi}{\phi-\alpha}} \Big\} \delta \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}}z_{t+1}^{\frac{(1-\alpha)\phi}{\phi-\alpha}-1}k_{t+1}^{\frac{(\alpha-1)\phi}{\phi-\alpha}}
 	\intertext{which, at the steady state is}
-	\frac{\partial}{\partial z_{t+1}}V_* 	&= \Big( 1-\alpha+\frac{(1-\alpha)\alpha}{\phi-\alpha} \Big)\Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}} k_{*}^{\alpha+\frac{(\alpha-1)\alpha}{\phi-\alpha}} - \delta \Big( \frac{(1-\alpha)\phi}{\phi-\alpha} \Big)\Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}}k_{*}^{1+\frac{(\alpha-1)\phi}{\phi-\alpha}} \\
+	V_5 	&= \Big( 1-\alpha+\frac{(1-\alpha)\alpha}{\phi-\alpha} \Big)\Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}} k_{*}^{\alpha+\frac{(\alpha-1)\alpha}{\phi-\alpha}} - \delta \Big( \frac{(1-\alpha)\phi}{\phi-\alpha} \Big)\Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}}k_{*}^{1+\frac{(\alpha-1)\phi}{\phi-\alpha}} \\
 												&- \beta \Big\{ k_{*}^{\alpha+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}} - \delta \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}}k_{*}^{1+\frac{(\alpha-1)\phi}{\phi-\alpha}} \Big\} \alpha \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}} \Big( 1-\alpha+\frac{(1-\alpha)\alpha}{\phi-\alpha} \Big)k_{*}^{\alpha-1+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \\
 												&- \beta \Big\{ k_{*}^{\alpha+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}} - \delta \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}}k_{*}^{1+\frac{(\alpha-1)\phi}{\phi-\alpha}} \Big\} \delta \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}}k_{*}^{\frac{(\alpha-1)\phi}{\phi-\alpha}}						
 	\end{align*}
@@ -148,16 +148,86 @@ And as the last derivative, we have
 											&+ \beta \Big\{ \Big( 1-\alpha+\frac{(1-\alpha)\alpha}{\phi-\alpha} \Big) z_{t}^{\frac{(1-\alpha)\alpha}{\phi-\alpha}-\alpha} k_{t}^{\alpha+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}} - \delta \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}} \Big( \frac{(1-\alpha)\phi}{\phi-\alpha} \Big) z_{t}^{\frac{(1-\alpha)\phi}{\phi-\alpha}-1}k_{t}^{1+\frac{(\alpha-1)\phi}{\phi-\alpha}} \Big\}\\
 											& \cdot \delta \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}} z_{t+1}^{\frac{(1-\alpha)\phi}{\phi-\alpha}}k_{t+1}^{\frac{(\alpha-1)\phi}{\phi-\alpha}},
 	\intertext{and evaluated at the steady state this is}
-	\frac{\partial}{\partial z_t}V_* 	&= \beta \Big\{ \Big( 1-\alpha+\frac{(1-\alpha)\alpha}{\phi-\alpha} \Big)  k_{*}^{\alpha+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}} - \delta \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}} \Big( \frac{(1-\alpha)\phi}{\phi-\alpha} \Big) k_{*}^{1+\frac{(\alpha-1)\phi}{\phi-\alpha}} \Big\}\\
+	V_4 	&= \beta \Big\{ \Big( 1-\alpha+\frac{(1-\alpha)\alpha}{\phi-\alpha} \Big)  k_{*}^{\alpha+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}} - \delta \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}} \Big( \frac{(1-\alpha)\phi}{\phi-\alpha} \Big) k_{*}^{1+\frac{(\alpha-1)\phi}{\phi-\alpha}} \Big\}\\
 											&\cdot \alpha \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}} k_{*}^{\alpha-1+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \\
 											&- \beta \Big\{ \Big( 1-\alpha+\frac{(1-\alpha)\alpha}{\phi-\alpha} \Big) k_{*}^{\alpha+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}} - \delta \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}} \Big( \frac{(1-\alpha)\phi}{\phi-\alpha} \Big) k_{*}^{1+\frac{(\alpha-1)\phi}{\phi-\alpha}} \Big\} \\
 											&+ \beta \Big\{ \Big( 1-\alpha+\frac{(1-\alpha)\alpha}{\phi-\alpha} \Big) k_{*}^{\alpha+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}} - \delta \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}} \Big( \frac{(1-\alpha)\phi}{\phi-\alpha} \Big) k_{*}^{1+\frac{(\alpha-1)\phi}{\phi-\alpha}} \Big\}\\
 											& \cdot \delta \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}} k_{*}^{\frac{(\alpha-1)\phi}{\phi-\alpha}}						
 	\end{align*}
 Note: $\frac{\partial}{\partial z_t}c_t = \Big\{ \Big( 1-\alpha+\frac{(1-\alpha)\alpha}{\phi-\alpha} \Big) z_{t}^{\frac{(1-\alpha)\alpha}{\phi-\alpha}-\alpha} k_{t}^{\alpha+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}} - \delta \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}} \Big( \frac{(1-\alpha)\phi}{\phi-\alpha} \Big) z_{t}^{\frac{(1-\alpha)\phi}{\phi-\alpha}-1}k_{t}^{1+\frac{(\alpha-1)\phi}{\phi-\alpha}} \Big\}$
+Next we have
+	\begin{align*}
+	z_{t+1} 	&= \exp(\rho x_{t} + \epsilon_{t+1}) \\
+	z_{t}		&= \exp(\rho x_{t-1} + \epsilon_{t}) \\ 
+	\end{align*}
+We can rewrite due to $x_{t} = \rho x_{t-1} + \epsilon_{t} = \log z_t$to
+	\begin{align*}
+	z_{t+1}	&= \exp(\rho (\rho x_{t-1}+\epsilon_t)+\epsilon_{t+1}) \\
+				&= \exp(\rho \log z_t + \epsilon_{t+1}) \\  \\
+				&= \exp(\epsilon_{t+1}) z_t^\rho 
+	\end{align*}	
+Now we can take the derivative
+	\begin{align*}
+	\frac{\partial}{\partial z_t}z_{t+1} 	&= \rho \exp(\epsilon_{t+1}) z_t^{\rho-1} 
+	\intertext{and evaluated at the steady state this equals}
+	\frac{\partial}{\partial z_t}z_{*}		&= \rho \exp(0) 1^{\rho-1} = \rho
+	\end{align*}
+Therefore we have
+	\begin{align*}
+	(z_{t+1}-z^*) =  \rho (z_t-z^*) + \epsilon_{t+1} \\
+	\end{align*}	
+where $\epsilon_{t+1}$ is the approximation error from the Taylor approximation. 
 
-
-
+To summarize, we have
+	\begin{align*}
+	 \xi_{t+1}			&= V_3(k_{t+2}-k^*)+V_2(k_{t+1}-k^*)+V_1(k_{t}-k^*)+V_5(z_{t+1}-z^*)+V_4(z_{t}-z^*)  \\
+	 0 					&= (k_{t+1}-k^*)-(k_{t}-k^*) \\
+	 \epsilon_{t+1}	&= (z_{t+1}-z^*) - \rho (z_{t}-z^*)
+	\end{align*}
+with $V_i$ being the partial derivatives defined above.	 Then we have
+	\begin{align*}
+		\begin{pmatrix}
+		V_3 & V_2 & V_5 \\ 0 & 1 & 0 \\ 0 & 0 & 1 
+		\end{pmatrix}
+		\begin{pmatrix}
+		k_{t+2}-k^* \\ k_{t+1}-k^* \\ z_{t+1}-z^* 
+		\end{pmatrix}
+	+ 
+		\begin{pmatrix}
+		0 & V_1 & V_4 \\ -1 & 0 & 0 \\ 0 & 0 & -\rho
+		\end{pmatrix}
+		\begin{pmatrix}
+		k_{t+1}-k^* \\ k_t-k^* \\ z_t-z^*
+		\end{pmatrix}
+	= 
+		\begin{pmatrix}
+		\xi_{t+1} \\ 0 \\ \epsilon_{t+1}
+		\end{pmatrix}	
+	\end{align*}
+And then	
+	\begin{align*}
+		\begin{pmatrix}
+		k_{t+2}-k^* \\ k_{t+1}-k^* \\ z_{t+1}-z^* 
+		\end{pmatrix}
+	= 	
+	-	
+		\begin{pmatrix}
+		V_3 & V_2 & V_5 \\ 0 & 1 & 0 \\ 0 & 0 & 1 
+		\end{pmatrix}^{-1}
+		\begin{pmatrix}
+		0 & V_1 & V_4 \\ -1 & 0 & 0 \\ 0 & 0 & -\rho
+		\end{pmatrix}
+		\begin{pmatrix}
+		k_{t+1}-k^* \\ k_t-k^* \\ z_t-z^*
+		\end{pmatrix}
+	+
+		\begin{pmatrix}
+		V_3 & V_2 & V_5 \\ 0 & 1 & 0 \\ 0 & 0 & 1 
+		\end{pmatrix}^{-1}	
+		\begin{pmatrix}
+		\xi_{t+1} \\ 0 \\ \epsilon_{t+1}
+		\end{pmatrix}		
+	\end{align*}
 %
 %
 %
