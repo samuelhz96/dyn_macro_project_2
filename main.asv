@@ -13,7 +13,7 @@
 
 % Load parameters:
 parameters;
-disp(P);
+disp(P)
 
 
 
@@ -29,7 +29,7 @@ fun = @(x) P.beta.*(P.alpha.*(P.alpha.*(P.delta.*P.phi).^(-1).*x.^(P.alpha-1)).^
 c = 1:0.1:100;
 
 % Plot the function defined above:
-%plot(c,fun(c));
+plot(c,fun(c));
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -132,7 +132,6 @@ V5 = @(kss) dcttdztt(kss) - P.beta.*(cSS(kss).*dbracketdztt(kss) + bracketEULER(
 A = [V3(kss) V2(kss) V5(kss); 0 1 0; 0 0 1];
 B = [0 V1(kss) V4(kss); -1 0 0; 0 0 -P.rho];
 
-PI = -inv(A)*B;
-abs(eig(PI));
-PIeigenvalues = eig(PI,'matrix')
-
+PI = inv(A)*B;
+[V,D] = eig(PI);
+abs(eig(PI))
