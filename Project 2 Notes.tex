@@ -243,6 +243,53 @@ where we can use at the equilibrium
 	f_{k_{t+1}} |_*	&= \alpha \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}} z_{t+1}^{1-\alpha+\frac{(1-\alpha)\alpha}{\phi-\alpha}}k_{t+1}^{\alpha-1+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \\
 	\delta_{t+1}|_*	&=\delta \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}}z_{t+1}^{\frac{(1-\alpha)\phi}{\phi-\alpha}}k_{t+1}^{\frac{(\alpha-1)\phi}{\phi-\alpha}}
 	\end{align*}	
+\newpage
+We have
+	\begin{align*}
+	z_{t+1} = \Big( \exp(\epsilon_{t+1}) z_t^{\rho} \Big)
+	\end{align*}
+We have the Euler error given by
+	\begin{align*}
+	V_t = c_{t+1} - \beta c_t [f_{k_{t+1}}(k_{t+1},U_{t+1},z_{t+1})+1-\delta_{t+1}(k_{t+1})], \\
+	\end{align*}
+We have
+	\begin{align*}
+	U_t 		&= \Big( \frac{\alpha}{\delta\phi}z_t^{1-\alpha}k_{t}^{\alpha-1} \Big)^{\frac{1}{\phi-\alpha}} \\
+	U_{t+1}	&= \Big( \frac{\alpha}{\delta\phi}z_{t+1}^{1-\alpha}k_{t+1}^{\alpha-1} \Big)^{\frac{1}{\phi-\alpha}}
+	\intertext{or alternatively}
+				&= \Big( \frac{\alpha}{\delta\phi}\Big( \exp(\epsilon_{t+1}[{1-\alpha}]) z_t^{\rho {1-\alpha}} \Big)k_{t+1}^{\alpha-1} \Big)^{\frac{1}{\phi-\alpha}} \\
+				&= \Big( \frac{\alpha}{\delta\phi}\Big)^{\frac{1}{\phi-\alpha}} \exp\Big(\epsilon_{t+1}\frac{1-\alpha}{\phi-\alpha}\Big)z_t^{\rho \frac{1-\alpha}{\phi-\rho}}k_{t+1}^{\frac{\alpha-1}{\phi-\alpha}}
+	\end{align*}
+And
+	\begin{align*}
+	c_t 		&= z_{t}^{1-\alpha}k_{t}^{\alpha}U_{t}^{\alpha} - k_{t+1} + k_{t} - \delta U_{t}^{\phi} k_{t}, \\
+				&= z_{t}^{1-\alpha}k_{t}^{\alpha}\Big( \frac{\alpha}{\delta\phi}z_t^{1-\alpha}k_{t}^{\alpha-1} \Big)^{\frac{\alpha}{\phi-\alpha}}-k_{t+1}+k_{t}-\delta \Big( \frac{\alpha}{\delta\phi}z_t^{1-\alpha}k_{t}^{\alpha-1} \Big)^{\frac{\phi}{\phi-\alpha}}k_{t} \\
+				&= z_{t}^{1-\alpha+\frac{(1-\alpha)\alpha}{\phi-\alpha}} k_{t}^{\alpha+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}}-k_{t+1} + k_{t} - \delta \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}}z_{t}^{\frac{(1-\alpha)\phi}{\phi-\alpha}}k_{t}^{1+\frac{(\alpha-1)\phi}{\phi-\alpha}}  \\
+	c_{t+1}	&= z_{t+1}^{1-\alpha+\frac{(1-\alpha)\alpha}{\phi-\alpha}} k_{t+1}^{\alpha+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}}-k_{t+2} + k_{t+1} - \delta \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}}z_{t+1}^{\frac{(1-\alpha)\phi}{\phi-\alpha}}k_{t+1}^{1+\frac{(\alpha-1)\phi}{\phi-\alpha}}	
+	\intertext{or alternatively:}
+	c_{t+1}	&=  \Big( \exp(\epsilon_{t+1}) z_t^{\rho} \Big)^{1-\alpha+\frac{(1-\alpha)\alpha}{\phi-\alpha}} k_{t+1}^{\alpha+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}}-k_{t+2} + k_{t+1} - \delta \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}} \Big( \exp(\epsilon_{t+1}) z_t^{\rho} \Big)^{\frac{(1-\alpha)\phi}{\phi-\alpha}}k_{t+1}^{1+\frac{(\alpha-1)\phi}{\phi-\alpha}}	
+	\end{align*}	
+Then we have
+	\begin{align*}
+	f_{k_{t+1}}(\cdot)	&= \alpha z_{t+1}^{1-\alpha}U_{t+1}^{\alpha}k_{t+1}^{\alpha-1} \\
+							&= \alpha z_{t+1}^{1-\alpha} k_{t+1}^{\alpha-1} \Big( \frac{\alpha}{\delta\phi}z_{t+1}^{1-\alpha}k_{t+1}^{\alpha-1} \Big)^{\frac{\alpha}{\phi-\alpha}} \\
+							&= \alpha z_{t+1}^{1-\alpha} k_{t+1}^{\alpha-1} \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}}z_{t+1}^{\frac{(1-\alpha)\alpha}{\phi-\alpha}}k_{t+1}^{\frac{(\alpha-1)\alpha}{\phi-\alpha}}  \\
+							&= \alpha \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}} z_{t+1}^{1-\alpha+\frac{(1-\alpha)\alpha}{\phi-\alpha}}k_{t+1}^{\alpha-1+\frac{(\alpha-1)\alpha}{\phi-\alpha}}
+	\intertext{or alternatively}
+							&= \alpha \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}} \Big( \exp(\epsilon_{t+1}) z_t^{\rho} \Big)^{1-\alpha+\frac{(1-\alpha)\alpha}{\phi-\alpha}}k_{t+1}^{\alpha-1+\frac{(\alpha-1)\alpha}{\phi-\alpha}}	\\
+							&= \alpha \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}}  \exp\Big(\epsilon_{t+1}\Big( {1-\alpha+\frac{(1-\alpha)\alpha}{\phi-\alpha}} \Big)\Big) z_t^{\rho \Big( {1-\alpha+\frac{(1-\alpha)\alpha}{\phi-\alpha}}\Big)} k_{t+1}^{\alpha-1+\frac{(\alpha-1)\alpha}{\phi-\alpha}}						
+	\end{align*}	
+And lastly we have
+	\begin{align*}
+	\delta_{t+1}=\delta U_{t+1}^{\phi} 	&= \delta \Big( \frac{\alpha}{\delta\phi}z_{t+1}^{1-\alpha}k_{t+1}^{\alpha-1} \Big)^{\frac{\phi}{\phi-\alpha}} \\
+												&= \delta \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}}z_{t+1}^{\frac{(1-\alpha)\phi}{\phi-\alpha}}k_{t+1}^{\frac{(\alpha-1)\phi}{\phi-\alpha}}
+	\intertext{or alternatively}
+	&= \delta \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}}\Big( \exp(\epsilon_{t+1}) z_t^{\rho} \Big)^{\frac{(1-\alpha)\phi}{\phi-\alpha}}k_{t+1}^{\frac{(\alpha-1)\phi}{\phi-\alpha}} \\
+	&= \delta \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}} \exp\Big( \epsilon_{t+1} \frac{(1-\alpha)\phi}{\phi-\alpha} \Big) z_t^{\frac{(1-\alpha)\rho \phi}{\phi-\alpha}}k_{t+1}^{\frac{(\alpha-1)\phi}{\phi-\alpha}}
+	\end{align*}
+
+
+
 	
 %
 %
