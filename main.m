@@ -12,7 +12,12 @@
 % discounted, two-period utility of the agent
 
 % Load parameters:
-parameters;
+parameters1;
+% Load alternative parameters (comment out unused)
+%parameters2
+%parameters3
+%parameters4
+
 disp(P);
 
 
@@ -143,4 +148,14 @@ B = [0 V1(kss) V4(kss); -1 0 0; 0 0 -P.rho];
 PI = -inv(A)*B;
 PIabsEigenvalues = abs(eig(PI))
 PIeigenvalues = eig(PI,'matrix')
+
+
+
+[V,D] = eig(PI.','nobalance')
+V_2 = inv(V);
+eigen_vec_1 = V_2(:,1)
+
+% Policy function:
+beta_1 = eigen_vec_1(2)./(-eigen_vec_1(1))
+beta_2 = eigen_vec_1(3)./(-eigen_vec_1(1))
 
