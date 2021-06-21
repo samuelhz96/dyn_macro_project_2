@@ -287,10 +287,48 @@ And lastly we have
 	&= \delta \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}}\Big( \exp(\epsilon_{t+1}) z_t^{\rho} \Big)^{\frac{(1-\alpha)\phi}{\phi-\alpha}}k_{t+1}^{\frac{(\alpha-1)\phi}{\phi-\alpha}} \\
 	&= \delta \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}} \exp\Big( \epsilon_{t+1} \frac{(1-\alpha)\phi}{\phi-\alpha} \Big) z_t^{\frac{(1-\alpha)\rho \phi}{\phi-\alpha}}k_{t+1}^{\frac{(\alpha-1)\phi}{\phi-\alpha}}
 	\end{align*}
+\textbf{Now we need the partial derivatives of all these terms w.r.t.\ certain components evaluated at the steady state:}
 
-
-
-	
+First we have \textbf{current consumption}
+	\begin{align*}
+	\frac{\partial}{\partial k_{t+2}}c_t 	&= 0 \\
+	\frac{\partial}{\partial k_{t+1}}c_t 	&= -1 \\
+	\frac{\partial}{\partial k_{t}}c_t 		&=  \Big( \alpha+\frac{(\alpha-1)\alpha}{\phi-\alpha} \Big)k_t^{\alpha -1 + \frac{(\alpha-1)\alpha}{\phi-\alpha}}\Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}} + 1 - \delta \Big( 1+\frac{(\alpha-1)\phi}{\phi-\alpha} \Big) \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}} k_t^{\frac{(\alpha-1)\phi}{\phi-\alpha}} \\
+	\frac{\partial}{\partial z_{t+1}}c_t 	&= 0\\
+	\frac{\partial}{\partial z_{t}}c_t 		&= \Big( 1-\alpha+\frac{(1-\alpha)\alpha}{\phi-\alpha} \Big)k_t^{\alpha + \frac{(\alpha-1)\alpha}{\phi-\alpha}}\Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}} - \delta \Big(\frac{(1-\alpha)\phi}{\phi-\alpha}\Big) \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}}k_t^{1+\frac{(\alpha-1)\phi}{\phi-\alpha}}
+	\end{align*}
+Now we have \textbf{next-period consumption}
+	\begin{align*}
+	\frac{\partial}{\partial k_{t+2}}c_{t+1} 	&= -1 \\
+	\frac{\partial}{\partial k_{t+1}}c_{t+1} 	&= \Big( \alpha+\frac{(\alpha-1)\alpha}{\phi-\alpha} \Big)k_{t+1}^{\alpha -1 + \frac{(\alpha-1)\alpha}{\phi-\alpha}}\Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}} + 1 - \delta \Big( 1+\frac{(\alpha-1)\phi}{\phi-\alpha} \Big) \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}} k_{t+1}^{\frac{(\alpha-1)\phi}{\phi-\alpha}}\\
+	\frac{\partial}{\partial k_{t}}c_{t+1} 	&= 0\\
+	\frac{\partial}{\partial z_{t+1}}c_{t+1}	&= \Big( 1-\alpha+\frac{(1-\alpha)\alpha}{\phi-\alpha} \Big) k_{t+1}^{\alpha+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}} - \delta \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}}\Big( \frac{(1-\alpha)\phi}{\phi-\alpha} \Big) k_{t+1}^{1+\frac{(\alpha-1)\phi}{\phi-\alpha}}\\
+	\frac{\partial}{\partial z_{t}}c_{t+1}		&= \Big( \rho-\rho\alpha+	\frac{(1-\alpha)\alpha\rho}{\phi-\alpha} \Big) k_{t+1}^{\alpha+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}} - \delta \frac{(1-\alpha)\phi\rho}{\phi-\alpha} k_{t+1}^{1+\frac{(\alpha-1)\phi}{\phi-\alpha}}\Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}}
+	\end{align*}
+Next we have the \textbf{partial derivative of next period output w.r.t.\ next periods capital}
+	\begin{align*}
+	\frac{\partial}{\partial k_{t+2}}f_{k_{t+1}}(\cdot) 	&= 0 \\
+	\frac{\partial}{\partial k_{t+1}}f_{k_{t+1}}(\cdot) 	&= \alpha \Big( \alpha-1+\frac{(\alpha-1)\alpha}{\phi-\alpha} \Big) \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}} k_{t+1}^{\alpha-2+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \\
+	\frac{\partial}{\partial k_{t}}f_{k_{t+1}}(\cdot) 		&= 0 \\
+	\frac{\partial}{\partial z_{t+1}}f_{k_{t+1}}(\cdot) 	&= \alpha \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}} \Big( 1-\alpha+\frac{(1-\alpha)\alpha}{\phi-\alpha} \Big) k_{t+1}^{\alpha-1+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \\
+	\frac{\partial}{\partial z_t}f_{k_{t+1}}(\cdot) 			&= \alpha \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}}\Big[ \rho \Big( {1-\alpha+\frac{(1-\alpha)\alpha}{\phi-\alpha}}\Big) \Big] k_{t+1}^{\alpha-1+\frac{(\alpha-1)\alpha}{\phi-\alpha}}
+	\end{align*}	
+Lastly we have the \textbf{next-period depreciation rate}
+	\begin{align*}
+	\frac{\partial}{\partial k_{t+2}}\delta_{t+1} 	&= 0 \\
+	\frac{\partial}{\partial k_{t+1}}\delta_{t+1} 	&= \frac{(\alpha-1)\phi\delta}{\phi-\alpha}\Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}}k_{t+1}^{\frac{(\alpha-1)\phi}{\phi-\alpha}-1} \\
+	\frac{\partial}{\partial k_{t}}\delta_{t+1} 		&=	0 \\
+	\frac{\partial}{\partial z_{t+1}}\delta_{t+1} 	&= \frac{(1-\alpha)\phi\delta}{\phi-\alpha} \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}} k_{t+1}^{\frac{(\alpha-1)\phi}{\phi-\alpha}}\\
+	\frac{\partial}{\partial z_{t}}\delta_{t+1} 		&= \frac{(1-\alpha)\rho\phi\delta}{\phi-\alpha} \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}} k_{t+1}^{\frac{(\alpha-1)\phi}{\phi-\alpha}}
+	\end{align*}
+We use this in 
+	\begin{align*}
+	V_1 	&= \frac{\partial}{\partial k_t}c_{t+1} - \beta \Big\{ c_t \frac{\partial}{\partial k_t}[f_{k_{t+1}}(\cdot)+1-\delta_{t+1}] + [f_{k_{t+1}}(\cdot)+1-\delta_{t+1}]\frac{\partial}{\partial k_t}c_t \Big\} \\
+	V_2 	&= \frac{\partial}{\partial k_{t+1}}c_{t+1} - \beta \Big\{ c_t \frac{\partial}{\partial k_{t+1}}[f_{k_{t+1}}(\cdot)+1-\delta_{t+1}] + [f_{k_{t+1}}(\cdot)+1-\delta_{t+1}]\frac{\partial}{\partial k_{t+1}}c_t \Big\} \\
+	V_3 	&= \frac{\partial}{\partial k_{t+2}}c_{t+1} - \beta \Big\{ c_t \frac{\partial}{\partial k_{t+2}}[f_{k_{t+1}}(\cdot)+1-\delta_{t+1}] + [f_{k_{t+1}}(\cdot)+1-\delta_{t+1}]\frac{\partial}{\partial k_{t+2}}c_t \Big\} \\	
+	V_4 	&= \frac{\partial}{\partial z_{t}}c_{t+1} - \beta \Big\{ c_t \frac{\partial}{\partial z_{t}}[f_{k_{t+1}}(\cdot)+1-\delta_{t+1}] + [f_{k_{t+1}}(\cdot)+1-\delta_{t+1}]\frac{\partial}{\partial z_{t}}c_t \Big\} \\		
+	V_5 	&= \frac{\partial}{\partial z_{t+1}}c_{t+1} - \beta \Big\{ c_t \frac{\partial}{\partial z_{t+1}}[f_{k_{t+1}}(\cdot)+1-\delta_{t+1}] + [f_{k_{t+1}}(\cdot)+1-\delta_{t+1}]\frac{\partial}{\partial z_{t+1}}c_t \Big\} \\		
+	\end{align*}	
 %
 %
 %
