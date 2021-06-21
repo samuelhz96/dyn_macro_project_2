@@ -145,17 +145,17 @@ V5 = @(kss) dcttdztt(kss) - P.beta.*(cSS(kss).*(dfdztt(kss)-ddtdztt(kss)) + (dyS
 A = [V3(kss) V2(kss) V5(kss); 0 1 0; 0 0 1];
 B = [0 V1(kss) V4(kss); -1 0 0; 0 0 -P.rho];
 
-PI = -inv(A)*B;
-PIabsEigenvalues = abs(eig(PI))
-PIeigenvalues = eig(PI,'matrix')
+PI = -inv(A)*B;                     % create Pi matrix 
+PIabsEigenvalues = abs(eig(PI))     % verify the size of eigenvalues
 
+[V,D] = eig(PI.','nobalance')   % get eigenvalue matrix and eigenvector matrix
+[V,D] = sortem(V,D);            % sort the eigenvectors in descending order from their respective eigenvalues
+V_2 = inv(V);                   % invert matrix of eigenvectors
+eigen_vec_1 = V_2(:,1)          % get first eigenvector of inverted matrix
 
-
-[V,D] = eig(PI.','nobalance')
-V_2 = inv(V);
-eigen_vec_1 = V_2(:,1)
 
 % Policy function:
-beta_1 = eigen_vec_1(2)./(-eigen_vec_1(1))
-beta_2 = eigen_vec_1(3)./(-eigen_vec_1(1))
+% Note: G_0 is simply the steady state value
+beta_1 = eigen_vec_1(2)./(-eigen_vec_1(1))  % G_1
+beta_2 = eigen_vec_1(3)./(-eigen_vec_1(1))  % G_2
 
