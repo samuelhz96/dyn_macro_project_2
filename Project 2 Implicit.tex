@@ -1,0 +1,142 @@
+\documentclass[a4paper]{article}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage[utf8]{inputenc}
+\usepackage[official]{eurosym}
+\usepackage[left=2cm, right=2cm, top=2cm]{geometry} %right=30mm,left=30mm,top=15mm,bottom=20mm für die Bachelorarbeit/Seminararbeit
+\usepackage{graphicx} % support the \includegraphics command and options
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{adjustbox}
+\usepackage{mathtools}
+\usepackage{centernot}
+\usepackage{sectsty}
+\usepackage[parfill]{parskip} % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{booktabs} % for much better looking tables
+\usepackage{array} % for better arrays (eg matrices) in maths
+\usepackage{paralist}% very flexible & customisable lists (eg. enumerate/itemize, etc.)
+\usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
+\usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{perpage}
+\usepackage{hyperref}
+\usepackage[perpage,symbol*]{footmisc}
+\usepackage{chngcntr}
+\usepackage{amsthm}
+\usepackage{makecell}
+\usepackage{csquotes}
+\usepackage{lastpage}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{framed}
+\usepgfplotslibrary{fillbetween}
+\usetikzlibrary{patterns}
+\subsectionfont{\itshape}
+\makeatletter
+\renewcommand{\@seccntformat}[1]{}
+\makeatother
+\allowdisplaybreaks
+\linespread{1.1}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Project I: One-Sector Growth Model} % add others
+\rhead{Page \thepage \hspace{1pt} of \pageref{LastPage}}
+\chead{Project II}
+\title{Dynamic Macroeconomics with Numerics: Project II}
+\author{Hashem Zehi, Samuel (120112285)\\Kotiers, Róza (11945569)\\Polzin, Julian (11948952)}
+\date{\today}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{exmp}{Example}[section]
+\newtheorem{note}{Note}[section]
+\newtheorem{prop}{Proposition}[section]
+\newcommand\Tau{\mathcal{T}}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newcommand*\diff{\mathop{}\!\mathrm{d}} %Integral d 
+\newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+\begin{document}
+\maketitle
+\newpage
+\section{Part 1: Blanchard Kahn Approach}
+First note that we have
+	\begin{align*}
+	z_{t+1} 	&= \exp(\epsilon_{t+1})z_{t}^{\rho} ,
+	\intertext{but we may also use}
+	z_{t+1} 	&= \exp( x_{t+1}) 	= \exp(\rho x_{t} + \epsilon_{t+1}),
+	\end{align*}
+However the derivatives evaluated at the steady state remain the same in either notation. Now we summarize the equilibrium conditions in the following four equations:
+	\begin{align*}
+	\mathbb E c_{t+1} 	&= \beta c_t \mathbb E \Big[ \alpha \exp(x_{t+1})^{1-\alpha} U_{t+1}^{\alpha} k_{t+1}^{\alpha-1} + 1 - \delta U_{t+1}^{\phi} \Big] \\
+	k_{t+1}				&= \exp\big([{1-\alpha}]x_{t}\big)(k_t U_t)^{\alpha} + (1-\delta U_t^{\phi})k_t - c_t \\
+	 U_{t+1}			&= \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{1}{\phi-\alpha}} \exp\Big(\frac{1-\alpha}{\phi-\alpha}x_{t+1}\Big)k_{t+1}^{\frac{\alpha-1}{\phi-\alpha}} \\
+	x_{t+1} 				&= \rho x_{t} + \epsilon_{t+1}
+	\end{align*}
+For ease of notation we have
+	\begin{align*}
+	\forall i \in \{ 0,1,2,\dots \}: \mathbf s_{t+i} = \begin{pmatrix} c_{t+i} \\ U_{t+i} \\ k_{t+i} \\ x_{t+i} \end{pmatrix}.
+	\end{align*}	
+Now we write this system of equations as follows:
+	\begin{align*}
+	\mathbf F(\mathbf s_{t+1},\mathbf s_{t}) 	= 
+		\begin{pmatrix}
+		c_{t+1} - \beta c_t  \Big[ \alpha \exp(x_{t+1})^{1-\alpha} U_{t+1}^{\alpha} k_{t+1}^{\alpha-1} + 1 - \delta U_{t+1}^{\phi} \Big] \\
+		U_{t+1} - \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{1}{\phi-\alpha}} \exp\Big(\frac{1-\alpha}{\phi-\alpha}x_{t+1}\Big)k_{t+1}^{\frac{\alpha-1}{\phi-\alpha}} \\
+		\exp\big([{1-\alpha}]x_{t}\big)(k_t U_t)^{\alpha} + (1-\delta U_t^{\phi})k_t - c_t - k_{t+1} \\
+		x_{t-1} - \rho x_{t}
+		\end{pmatrix},
+	\end{align*}
+where we have $\mathbb E_t \mathbf F(\mathbf s_{t+1},\mathbf s_{t}) = \mathbf 0$. 
+
+Now we make use of the Jacobian being defined as
+	\begin{align*}
+	\mathbf J = -[D \mathbf F_2(\mathbf s^*, \mathbf s^*)]^{-1} D \mathbf F_1 (\mathbf s^*,\mathbf s^*),
+	\end{align*}
+so we can look at two separate matrices. We start by taking the derivatives w.r.t.\ the period $t$ variables of $\mathbf s_t$:
+	\begin{align*}
+	D \mathbf F_1(\mathbf s^*,\mathbf s^*)	= 
+		\begin{pmatrix}
+		- \beta [\alpha U_*^{\alpha}k_*^{\alpha-1}+1-\delta U_*^{\phi}] & 0 & 0 & 0 \\
+		0  & 0 & 0 & 0 \\
+		-1 & \delta \phi U_*^{\phi-1}k_* + \alpha k_*^{\alpha} U_*^{\alpha-1} & (1-\delta U_*^{\phi})+\alpha k_*^{\alpha-1}U_*^{\alpha} & (1-\alpha)(k_* U_*)^{\alpha} \\
+		0 & 0 & 0 & -\rho 
+		\end{pmatrix}
+	\end{align*}
+Next up is the second matrix containing the partial derivatives w.r.t.\ the period $t+1$ variables of $\mathbf s_{t+1}$:
+	\begin{align*}
+	D \mathbf F_2(\mathbf s^*, \mathbf s^*) = 
+		\begin{pmatrix}
+		1 & -\beta c_* \Big[ \alpha^2 (U_* k_*)^{\alpha-1}  +  \delta \phi U_*^{\phi-1}\Big] & -\beta c_* \alpha(\alpha-1) U_*^{\alpha}k_*^{\alpha-2} & -\beta c_* \Big[ \alpha (1-\alpha)U_*^{\alpha}k_*^{\alpha-1} \Big] \\
+		0 & 1  & - \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{1}{\phi-\alpha}}\Big( \frac{\alpha-1}{\phi-\alpha} k_*^{\frac{\alpha-1}{\phi-\alpha}-1} \Big) & - \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{1}{\phi-\alpha}} \frac{1-\alpha}{\phi-\alpha}k_*^{\frac{\alpha-1}{\phi-\alpha}}  \\
+		0 & 0 & -1 & 0 \\
+		0 & 0 & 0 & 1 \\
+		\end{pmatrix}
+	\end{align*}	
+We use this matrix in MATLAB. 	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
