@@ -88,6 +88,7 @@ ybar == cbar + ibar
 kss = x;
 
 % Shortcut for often used term
+adp = (P.alpha./(P.delta.*P.phi)).^(1./(P.phi-P.alpha));
 adpphi = (P.alpha./(P.delta.*P.phi)).^(P.phi./(P.phi-P.alpha));
 adpalpha = (P.alpha./(P.delta.*P.phi)).^(P.alpha./(P.phi-P.alpha));
 
@@ -100,62 +101,24 @@ dySS = @(kss) P.alpha.*adpalpha.*kss.^(P.alpha-1+(((P.alpha-1).*P.alpha)./(P.phi
 % Steady state depreciation as function of steady state capital and parameters
 deltaSS = @(kss) P.delta.*adpphi.*kss.^(((P.alpha-1).*P.phi)/(P.phi-P.alpha));
 
+% Steady state capital utiliuzation
+USS = @(kss) (P.alpha./(P.delta.*P.phi)).^(1./(P.phi-P.alpha)).*kss.^((P.alpha-1)./(P.phi-P.alpha));
 
-% Step 1: 
-% Partial derivatives of consumption in period t at steady state
-dctdkttt = @(kss) 0.*kss;
-dctdktt = @(kss) (-kss)./kss;
-dctdkt = @(kss) (P.alpha+(((P.alpha-1).*P.alpha)./(P.phi-P.alpha))).*kss.^(P.alpha-1+(((P.alpha-1).*P.alpha)/(P.phi-P.alpha))).*adpalpha+1-P.delta.*adpphi.*(1+(((P.alpha-1).*P.phi)/(P.phi-P.alpha))).*kss.^(((P.alpha-1).*P.phi)/(P.phi-P.alpha));
-dctdztt = @(kss) 0.*kss;
-dctdzt = @(kss) (1-P.alpha+(((1-P.alpha).*P.alpha)./(P.phi-P.alpha))).*adpalpha.*kss.^(P.alpha+(((P.alpha-1).*P.alpha)/(P.phi-P.alpha)))-P.delta.*adpphi.*(((1-P.alpha).*P.phi)/(P.phi-P.alpha)).*kss.^(1+(((P.alpha-1).*P.phi)/(P.phi-P.alpha)));
+% Step 1: DF_1(*)
+DF1 = [
+    -P.beta.*(P.alpha.*USS(kss).^(P.alpha).*kss.^(P.alpha-1)+1-P.delta.*USS(kss).^P.phi), 0, 0, 0;
+    0, 0, 0, 0;
+    -1, P.delta.*P.phi.*USS(kss).^(P.phi-1).*kss+P.alpha.*kss.^(P.alpha).*USS(kss).^(P.alpha-1), (1-P.delta.*USS(kss).^P.phi)+P.alpha.*kss.^(P.alpha-1).*USS(kss).^(P.alpha), (1-P.alpha).*(kss.*USS(kss)).^(P.alpha);
+    0, 0, 0, -P.rho];
 
-% Step 2: 
-% Partial derivatives of period t+1 consumption at steady state
-dcttdkttt = @(kss) (-kss)./kss;
-dcttdktt = @(kss) (P.alpha+(((P.alpha-1).*P.alpha)./(P.phi-P.alpha))).*kss.^(P.alpha-1+(((P.alpha-1).*P.alpha)./(P.phi-P.alpha))).*adpalpha+1-P.delta.*(1+(((P.alpha-1).*P.phi)/(P.phi-P.alpha))).*adpphi.*kss.^(((P.alpha-1).*P.phi)/(P.phi-P.alpha));
-dcttdkt = @(kss) 0.*kss;
-dcttdztt = @(kss) (1-P.alpha+(((1-P.alpha).*P.alpha)/(P.phi-P.alpha))).*adpalpha.*kss.^(P.alpha+(((P.alpha-1).*P.alpha)/(P.phi-P.alpha)))-P.delta.*adpphi.*(((1-P.alpha).*P.phi)/(P.phi-P.alpha)).*kss.^(1+(((P.alpha-1).*P.phi)/(P.phi-P.alpha)));
-dcttdzt = @(kss) P.rho.*(1-P.alpha+(((1-P.alpha).*P.alpha)/(P.phi-P.alpha))).*adpalpha.*kss.^(P.alpha+(((P.alpha-1).*P.alpha)/(P.phi-P.alpha)))-P.rho.*P.delta.*adpphi.*(((1-P.alpha).*P.phi)/(P.phi-P.alpha)).*kss.^(1+(((P.alpha-1).*P.phi)/(P.phi-P.alpha)));
-
-% Step 3:
-% Partual derivatives of the f_{k_{t+1}}-delta_{t+1} at steady state
-dfdkttt = @(kss) 0.*kss;
-dfdktt = @(kss) P.alpha.*(P.alpha-1+(((P.alpha-1).*P.alpha)/(P.phi-P.alpha))).*adpalpha.*kss.^(P.alpha-2+(((P.alpha-1).*P.alpha)/(P.phi-P.alpha))) ;
-dfdkt = @(kss) 0.*kss;
-dfdztt = @(kss) P.alpha.*(1-P.alpha+(((1-P.alpha).*P.alpha)/(P.phi-P.alpha))).*adpalpha.*kss.^(P.alpha-1+(((P.alpha-1).*P.alpha)/(P.phi-P.alpha)));
-dfdzt = @(kss) P.alpha.*P.rho.*(1-P.alpha+(((1-P.alpha).*P.alpha)/(P.phi-P.alpha))).*adpalpha.*kss.^(P.alpha-1+(((P.alpha-1).*P.alpha)/(P.phi-P.alpha)));
-
-% Partial derivative of delta_{t+1} w.r.t. k_t in steady state
-ddtdkttt = @(kss) 0.*kss;
-ddtdktt = @(kss) (((P.alpha-1).*P.delta.*P.phi)/(P.phi-P.alpha)).*adpphi.*kss.^((((P.alpha-1).*P.phi)/(P.phi-P.alpha))-1);
-ddtdkt = @(kss) 0.*kss;
-ddtdztt = @(kss) (((1-P.alpha).*P.delta.*P.phi)/(P.phi-P.alpha)).*adpphi.*kss.^((((P.alpha-1).*P.phi)/(P.phi-P.alpha)));
-ddtdzt = @(kss) (((1-P.alpha).*P.rho.*P.delta.*P.phi)/(P.phi-P.alpha)).*adpphi.*kss.^(((P.alpha-1).*P.phi)/(P.phi-P.alpha));
+% Step 2: DF_2(*)
+DF2 = [1, -P.beta.*cSS(kss).*(P.alpha.^2.*(kss.*USS(kss)).^(P.alpha-1)+1-P.delta.*P.phi.*USS(kss).^(P.phi-1)), -P.beta.*cSS(kss).*P.alpha.*(P.alpha-1).*USS(kss).^(P.alpha).*kss.^(P.alpha-2)), -P.beta.*cSS(kss).*P.alpha.*(1-P.alpha).*kss.^(P.alpha-1);
+0, 1, (-1).*adp.*((P.alpha-1)./(P.phi-P.alpha)).*(kss).^(((P.alpha-1)./(P.phi-P.alpha))-1), (-1).*adp.*((1-P.alpha)./(P.phi-P.alpha)).*kss.^((P.alpha-1)./(P.phi-P.alpha));
+0, 0, -1, 0;
+0, 0, 0, 1];
 
 
-
-% Construct the elements for the matrices of the State Space Approach:
-V1 = @(kss) dcttdkt(kss) - P.beta.*(cSS(kss).*(dfdkt(kss)-ddtdkt(kss)) + (dySS(kss)+1-deltaSS(kss)).*dctdkt(kss));
-V2 = @(kss) dcttdktt(kss) - P.beta.*(cSS(kss).*(dfdktt(kss)-ddtdktt(kss)) + (dySS(kss)+1-deltaSS(kss)).*dctdktt(kss));
-V3 = @(kss) dcttdkttt(kss) - P.beta.*(cSS(kss).*(dfdktt(kss)-ddtdktt(kss)) + (dySS(kss)+1-deltaSS(kss)).*dctdkttt(kss));
-V4 = @(kss) dcttdzt(kss) - P.beta.*(cSS(kss).*(dfdzt(kss)-ddtdzt(kss)) + (dySS(kss)+1-deltaSS(kss)).*dctdzt(kss));
-V5 = @(kss) dcttdztt(kss) - P.beta.*(cSS(kss).*(dfdztt(kss)-ddtdztt(kss)) + (dySS(kss)+1-deltaSS(kss)).*dctdztt(kss));
+    
 
 
-A = [V3(kss) V2(kss) V5(kss); 0 1 0; 0 0 1];
-B = [0 V1(kss) V4(kss); -1 0 0; 0 0 -P.rho];
-
-PI = -inv(A)*B;                     % create Pi matrix 
-PIabsEigenvalues = abs(eig(PI))     % verify the size of eigenvalues
-
-[V,D] = eig(PI.','nobalance')   % get eigenvalue matrix and eigenvector matrix
-[V,D] = sortem(V,D);            % sort the eigenvectors in descending order from their respective eigenvalues
-V_2 = inv(V);                   % invert matrix of eigenvectors
-eigen_vec_1 = V_2(:,1)          % get first eigenvector of inverted matrix
-
-
-% Policy function:
-% Note: G_0 is simply the steady state value
-beta_1 = eigen_vec_1(2)./(-eigen_vec_1(1))  % G_1
-beta_2 = eigen_vec_1(3)./(-eigen_vec_1(1))  % G_2
 
