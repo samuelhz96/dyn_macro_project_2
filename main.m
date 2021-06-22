@@ -112,11 +112,33 @@ DF1 = [
     0, 0, 0, -P.rho];
 
 % Step 2: DF_2(*)
-DF2 = [1, -P.beta.*cSS(kss).*(P.alpha.^2.*(kss.*USS(kss)).^(P.alpha-1)+1-P.delta.*P.phi.*USS(kss).^(P.phi-1)), -P.beta.*cSS(kss).*P.alpha.*(P.alpha-1).*USS(kss).^(P.alpha).*kss.^(P.alpha-2)), -P.beta.*cSS(kss).*P.alpha.*(1-P.alpha).*kss.^(P.alpha-1);
-0, 1, (-1).*adp.*((P.alpha-1)./(P.phi-P.alpha)).*(kss).^(((P.alpha-1)./(P.phi-P.alpha))-1), (-1).*adp.*((1-P.alpha)./(P.phi-P.alpha)).*kss.^((P.alpha-1)./(P.phi-P.alpha));
+DF2 = [1, -P.beta.*cSS(kss).*(P.alpha.^2.*(kss.*USS(kss)).^(P.alpha-1)+1-P.delta.*P.phi.*USS(kss).^(P.phi-1)), -P.beta.*cSS(kss).*P.alpha.*(P.alpha-1).*USS(kss).^(P.alpha).*kss.^(P.alpha-2), -P.beta.*cSS(kss).*P.alpha.*(1-P.alpha).*kss.^(P.alpha-1);
+0, 1, -adp.*((P.alpha-1)./(P.phi-P.alpha)).*kss.^(((P.alpha-1)./(P.phi-P.alpha))-1), -adp.*((1-P.alpha)./(P.phi-P.alpha)).*kss.^((P.alpha-1)./(P.phi-P.alpha));
 0, 0, -1, 0;
 0, 0, 0, 1];
 
+% Step 3: Build Jacobian
+Jac = -(inv(DF2))*DF1;
+
+[V,D] = eig(Jac);
+
+eigvals         = diag(D);              % eigenvalues from D as a vector 
+idx_stable      = find(abs(eigvals)<1); % Index of stable eigenvalues 
+eigvals_stable  = eigvals(idx_stable)   % Retrieves stable eigenvalues fromv vector
+eigvecs_stable  = V(:,idx_stable); 
+    
+ukx_eigvecs = eigvecs_stable(2:4,:);
+c_eigvecs = eigvecs_stable(1,:);
+   
+inv_ukx_eigvecs= inv(ukx_eigvecs);
+   
+const1= c_eigvecs*inv_ukx_eigvecs(:,1);
+const2= c_eigvecs*inv_ukx_eigvecs(:,2);
+const3= c_eigvecs*inv_ukx_eigvecs(:,3);
+   
+G1= Jac(3,1).*const2+Jac(3,3)
+G2= Jac(3,1).*const3+Jac(3,4)
+G0 = kss
 
     
 

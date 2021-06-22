@@ -1,7 +1,7 @@
 % 1. Declarations
 %--------------------------------------------------------------------------
 
-var z,k,U,c,i,deltaT,x,y;
+var k,U,c,x;
 varexo e;
 parameters beta,alpha,delta,phi,rho;
 
@@ -20,14 +20,10 @@ rho = 0.9;
 %--------------------------------------------------------------------------
 
 model;
-k = (1-deltaT(-1))*k(-1) + (exp((1-alpha)*rho*x(-1)+(1-alpha)*e)*(((1-deltaT(-1))*k(-1) + i(-1))*U)^(alpha)-c);
+c(+1) = beta*c*(alpha*exp((1-alpha)*x(+1))*U(+1)^(alpha)*k(+1)^(alpha-1)+1-delta*U(+1)^phi);
+U = (alpha/(delta*phi))^(1/(phi-alpha))*exp(((1-alpha)/(phi-alpha))*x)*k^((alpha-1)/(phi-alpha));
+k = exp((1-alpha)*x(-1))*(k(-1)*U(-1))^(alpha)+(1-delta*U(-1)^phi)*k(-1)-c(-1);
 x = rho*x(-1)+e;
-z = exp(rho*x(-1)+e);
-U = ((phi*delta)^(-1)*alpha*z(-1)^(1-alpha)*k^(alpha-1))^((phi-alpha)^(-1));
-c(+1) = beta*c*(alpha*U(+1)*(z(+1))^(1-alpha)*(k(+1)*U(+1))^(alpha-1)+1-deltaT(+1));
-i = (exp((1-alpha)*rho*x(-1)+(1-alpha)*e)*(((1-deltaT(-1))*k(-1) + i(-1))*U)^(alpha)-c);
-deltaT = delta*U^phi;
-y = c+i;
 end;
 
 %--------------------------------------------------------------------------
@@ -36,13 +32,9 @@ end;
 
 initval;
 U = 0.6471;
-z= 1;
-i = 0.8993;
 c = 2.8478;
 k= 60.6232;
-deltaT = 0.0148;
 x = 0;
-y = 2.8478+0.8993;
 end;
 
 steady(solve_algo=1);
@@ -58,4 +50,4 @@ stderr (0.0005)^(0.5);
 end;
 
 stoch_simul(order=1, periods = 1000, irf = 1000);
-rplot y c i k;
+rplot c k;

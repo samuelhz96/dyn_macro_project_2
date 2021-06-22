@@ -248,6 +248,11 @@ We have
 	\begin{align*}
 	z_{t+1} = \Big( \exp(\epsilon_{t+1}) z_t^{\rho} \Big)
 	\end{align*}
+Or alternatively we may use
+	\begin{align*}
+	z_{t+1} 	&= \exp(x_{t+1}) = \exp(\rho x_t + \epsilon_{t+1}) \\
+	z_{t} 		&= \exp(x_{t})
+	\end{align*}	
 We have the Euler error given by
 	\begin{align*}
 	V_t = c_{t+1} - \beta c_t [f_{k_{t+1}}(k_{t+1},U_{t+1},z_{t+1})+1-\delta_{t+1}(k_{t+1})], \\
@@ -259,7 +264,7 @@ We have
 	\intertext{or alternatively}
 				&= \Big( \frac{\alpha}{\delta\phi}\Big( \exp(\epsilon_{t+1}[{1-\alpha}]) z_t^{\rho {1-\alpha}} \Big)k_{t+1}^{\alpha-1} \Big)^{\frac{1}{\phi-\alpha}} \\
 				&= \Big( \frac{\alpha}{\delta\phi}\Big)^{\frac{1}{\phi-\alpha}} \exp\Big(\epsilon_{t+1}\frac{1-\alpha}{\phi-\alpha}\Big)z_t^{\rho \frac{1-\alpha}{\phi-\rho}}k_{t+1}^{\frac{\alpha-1}{\phi-\alpha}}
-	\end{align*}
+	\end{align*}	
 And
 	\begin{align*}
 	c_t 		&= z_{t}^{1-\alpha}k_{t}^{\alpha}U_{t}^{\alpha} - k_{t+1} + k_{t} - \delta U_{t}^{\phi} k_{t}, \\
@@ -287,6 +292,31 @@ And lastly we have
 	&= \delta \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}}\Big( \exp(\epsilon_{t+1}) z_t^{\rho} \Big)^{\frac{(1-\alpha)\phi}{\phi-\alpha}}k_{t+1}^{\frac{(\alpha-1)\phi}{\phi-\alpha}} \\
 	&= \delta \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}} \exp\Big( \epsilon_{t+1} \frac{(1-\alpha)\phi}{\phi-\alpha} \Big) z_t^{\frac{(1-\alpha)\rho \phi}{\phi-\alpha}}k_{t+1}^{\frac{(\alpha-1)\phi}{\phi-\alpha}}
 	\end{align*}
+\newpage
+\textbf{USING $x_t$ we alternatively have}
+
+\textbf{Alternatively for the capital utilization rate using $x_t$ we have}
+	\begin{align*}
+	U_t 					&= \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{1}{\phi-\alpha}} \exp\Big(\frac{1-\alpha}{\phi-\alpha}x_t\Big)k_{t}^{\frac{\alpha-1}{\phi-\alpha}} \\
+	U_{t+1}(x_{t+1})	&= \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{1}{\phi-\alpha}} \exp\Big(\frac{1-\alpha}{\phi-\alpha}x_{t+1}\Big)k_{t+1}^{\frac{\alpha-1}{\phi-\alpha}} \\
+	U_{t+1}(x_t)			&=  \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{1}{\phi-\alpha}} \exp\Big(\frac{1-\alpha}{\phi-\alpha}(\rho x_t + \epsilon_{t+1})\Big)k_{t+1}^{\frac{\alpha-1}{\phi-\alpha}}
+	\end{align*}
+\textbf{Now the depreciation rate:}
+	\begin{align*}
+	\delta_t 						&= \delta \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}} \exp\Big(\frac{(1-\alpha)\phi}{\phi-\alpha}x_t\Big)k_{t}^{\frac{\alpha-1}{\phi-\alpha}} \\
+	\delta_{t+1}(x_{t+1})		&= \delta \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}} \exp\Big(\frac{(1-\alpha)\phi}{\phi-\alpha}x_{t+1}\Big)k_{t+1}^{\frac{(\alpha-1)\phi}{\phi-\alpha}} \\
+	\delta_{t+1}(x_t)			&=  \delta \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}} \exp\Big(\frac{(1-\alpha)\phi}{\phi-\alpha}(\rho x_t + \epsilon_{t+1})\Big)k_{t+1}^{\frac{(\alpha-1)\phi}{\phi-\alpha}}	
+	\end{align*}	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+			
 \textbf{Now we need the partial derivatives of all these terms w.r.t.\ certain components evaluated at the steady state:}
 
 First we have \textbf{current consumption}
@@ -351,9 +381,37 @@ We use this in
 	k_t = \underbrace{60.62}_{=G_0} + \underbrace{0.974}_{=G_1} (k_{t-1}-\bar k) + \underbrace{2.055}_{=G_2} (x_t-\bar x)
 	\end{align*}
 
+\newpage
+\subsection{Impulse response: one-time shock}	
+\textbf{How does capital change from the steady state with a one-time shock to TFP?}
+	\begin{align*}
+	(k_t-k^*)			&= G_1(k_{t-1}-k^*) + G_2(z_{t-1}-z^*) \\
+	(k_{t+1}-k^*)	&= G_1(k_{t}-k^*) + G_2(z_{t}-z^*) \\
+	(k_{t+1}-k^*)	&= G_1(G_1(k_{t-1}-k^*) + G_2(z_{t-1}-z^*))+G_2(\rho (z_{t-1}-z^*))  \\
+						&= G_1^2 (k_{t-1}-k^*) + G_1G_2 (z_{t-1}-z^*)+G_2 \rho (z_{t-1}-z^*) \\
+						&= G_1^2 (k_{t-1}-k^*) + (G_1 G_2 + G_2 \rho)(z_{t-1}-z^*) \\
+	(k_{t+2}-k^*)	&= G_1(G_1^2 (k_{t-1}-k^*) + G_1G_2 (z_{t-1}-z^*)+G_2 \rho (z_{t-1}-z^*)) + G_2(z_{t+1}-z^*)	\\
+						&= G_1(G_1^2 (k_{t-1}-k^*) + G_1G_2 (z_{t-1}-z^*)+G_2 \rho (z_{t-1}-z^*)) + G_2(\rho^2 z_{t-1}-z^*)	\\
+						&= G_1^3(k_{t-1}-k^*) + G_1^2 G_2 (z_{t-1}-z^*) + G_1 G_2 (z_{t-1}-z^*) + G_2 \rho^2 (z_{t-1}-z^*) \\
+	(k_{t+i}-k^*) 	&= G_1^{i}(k_{t-1}-k^*) + G_1^{i-1}G_2(z_{t-1}-z^*) + G_1 G_2^{i-1} (z_{t-1}-z^*) + G_2 \rho^{i-1}(z_{t-1}-z^*)	 \\
+						&= G_1^{i}(k_{t-1}-k^*) + \Big( G_1^{i-1}G_2+G_1 G_2^{i-1}+ G_2 \rho^{i-1} \Big)(z_{t-1}-z^*)			
+	\end{align*}
+So we need $G_1 < 1$ and $G_2 < 1$ in order to have a stable system that always goes back to the steady state.
 
+Furthermore, we have
+	\begin{align*}
+	z_t-z^* 		&= \rho(z_{t-1}-z^*) \\
+	z_{t+1}-z^* 	&= \rho(z_{t}-z^*) = \rho^2 (z_{t-1}-z^*) \\
+	z_{t+2}-z^* 	&= \rho(z_{t+1}-z^*) = \rho \rho^2(z_{t}-z^*) \\
+	z_{t+i}-z^* 	&= \rho(z_{t+i-1}-z^*) = \rho^{i+1} (z_{t-1}-z^*)
+	\end{align*}
 
-
+Then we can use this to find the time-path for all other variables based on how evolves:
+	\begin{align*}
+	k_{t+i} 	&= k^* + G_1^{i}(k_{t-1}-k^*) + \Big( G_1^{i-1}G_2+G_1 G_2^{i-1}+ G_2 \rho^{i-1} \Big)(z_{t-1}-z^*) \\
+	U_{t+i} 	&= 
+	y_{t+i} 	&= 
+	\end{align*}
 
 
 
