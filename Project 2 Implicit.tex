@@ -66,68 +66,20 @@ First note that we have
 	\intertext{but we may also use}
 	z_{t+1} 	&= \exp( x_{t+1}) 	= \exp(\rho x_{t} + \epsilon_{t+1}),
 	\end{align*}
-However the derivatives evaluated at the steady state remain the same in either notation. Now we summarize the equilibrium conditions in the following four equations:
-	\begin{align*}
-	\mathbb E c_{t+1} 	&= \beta c_t \mathbb E \Big[ \alpha \exp(x_{t+1})^{1-\alpha} U_{t+1}^{\alpha} k_{t+1}^{\alpha-1} + 1 - \delta U_{t+1}^{\phi} \Big] \\
-	k_{t+1}				&= \exp\big([{1-\alpha}]x_{t}\big)(k_t U_t)^{\alpha} + (1-\delta U_t^{\phi})k_t - c_t \\
-	 U_{t+1}			&= \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{1}{\phi-\alpha}} \exp\Big(\frac{1-\alpha}{\phi-\alpha}x_{t+1}\Big)k_{t+1}^{\frac{\alpha-1}{\phi-\alpha}} \\
-	x_{t+1} 				&= \rho x_{t} + \epsilon_{t+1}
-	\end{align*}
-For ease of notation we have
-	\begin{align*}
-	\forall i \in \{ 0,1,2,\dots \}: \mathbf s_{t+i} = \begin{pmatrix} c_{t+i} \\ U_{t+i} \\ k_{t+i} \\ x_{t+i} \end{pmatrix}.
-	\end{align*}	
-Now we write this system of equations as follows:
-	\begin{align*}
-	\mathbf F(\mathbf s_{t+1},\mathbf s_{t}) 	= 
-		\begin{pmatrix}
-		c_{t+1} - \beta c_t  \Big[ \alpha \exp(x_{t+1})^{1-\alpha} U_{t+1}^{\alpha} k_{t+1}^{\alpha-1} + 1 - \delta U_{t+1}^{\phi} \Big] \\
-		U_{t+1} - \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{1}{\phi-\alpha}} \exp\Big(\frac{1-\alpha}{\phi-\alpha}x_{t+1}\Big)k_{t+1}^{\frac{\alpha-1}{\phi-\alpha}} \\
-		\exp\big([{1-\alpha}]x_{t}\big)(k_t U_t)^{\alpha} + (1-\delta U_t^{\phi})k_t - c_t - k_{t+1} \\
-		x_{t+1} - \rho x_{t}
-		\end{pmatrix},
-	\end{align*}
-where we have $\mathbb E_t \mathbf F(\mathbf s_{t+1},\mathbf s_{t}) = \mathbf 0$. 
-
-Now we make use of the Jacobian being defined as
-	\begin{align*}
-	\mathbf J = -[D \mathbf F_2(\mathbf s^*, \mathbf s^*)]^{-1} D \mathbf F_1 (\mathbf s^*,\mathbf s^*),
-	\end{align*}
-so we can look at two separate matrices. We start by taking the derivatives w.r.t.\ the period $t$ variables of $\mathbf s_t$:
-	\begin{align*}
-	D \mathbf F_1(\mathbf s^*,\mathbf s^*)	= 
-		\begin{pmatrix}
-		- \beta [\alpha U_*^{\alpha}k_*^{\alpha-1}+1-\delta U_*^{\phi}] & 0 & 0 & 0 \\
-		0  & 0 & 0 & 0 \\
-		-1 & \delta \phi U_*^{\phi-1}k_* + \alpha k_*^{\alpha} U_*^{\alpha-1} & (1-\delta U_*^{\phi})+\alpha k_*^{\alpha-1}U_*^{\alpha} & (1-\alpha)(k_* U_*)^{\alpha} \\
-		0 & 0 & 0 & -\rho 
-		\end{pmatrix}
-	\end{align*}
-Next up is the second matrix containing the partial derivatives w.r.t.\ the period $t+1$ variables of $\mathbf s_{t+1}$:
-	\begin{align*}
-	D \mathbf F_2(\mathbf s^*, \mathbf s^*) = 
-		\begin{pmatrix}
-		1 & -\beta c_* \Big[ \alpha^2 (U_* k_*)^{\alpha-1}  +  \delta \phi U_*^{\phi-1}\Big] & -\beta c_* \alpha(\alpha-1) U_*^{\alpha}k_*^{\alpha-2} & -\beta c_* \Big[ \alpha (1-\alpha)U_*^{\alpha}k_*^{\alpha-1} \Big] \\
-		0 & 1  & - \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{1}{\phi-\alpha}}\Big( \frac{\alpha-1}{\phi-\alpha} k_*^{\frac{\alpha-1}{\phi-\alpha}-1} \Big) & - \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{1}{\phi-\alpha}} \frac{1-\alpha}{\phi-\alpha}k_*^{\frac{\alpha-1}{\phi-\alpha}}  \\
-		0 & 0 & -1 & 0 \\
-		0 & 0 & 0 & 1 \\
-		\end{pmatrix}
-	\end{align*}	
-We use this matrix in MATLAB. 
-\newpage
-\textbf{Alternative: 3-Equation System}
+Furthermore, we have from the Euler error defined in the last project two different capital utilization functions, differing only in the exponent
 	\begin{align*}
 	U_{t+1}^{\alpha} 	&= \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}} \exp\Big(\frac{(1-\alpha)\alpha}{\phi-\alpha}x_{t+1}\Big)k_{t+1}^{\frac{(\alpha-1)\alpha}{\phi-\alpha}} \\
 	U_{t+1}^{\phi} 		&= \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}} \exp\Big(\frac{(1-\alpha)\phi}{\phi-\alpha}x_{t+1}\Big)k_{t+1}^{\frac{(\alpha-1)\phi}{\phi-\alpha}}
 	\end{align*}
-Now we have
+We have a \textbf{three-equation system}, having already plugged the values for $U_t, U_{t+1}$ given by	
 	\begin{align*}
 	\mathbf F(\mathbf s_{t+1},\mathbf s_{t}) = 
 		\begin{pmatrix}
 		(1) \\ (2) \\ (3)
 		\end{pmatrix},	
 	\end{align*}	
-with the elements being given by the equations below.
+with the elements being given by the equations below:
+\small
 	\begin{align}
 	c_{t+1}-\beta c_{t} \bigg[\alpha \exp\Big( \big[1-\alpha+\frac{(1-\alpha)\alpha}{\phi-\alpha} \big] x_{t+1} \Big) k_{t+1}^{\alpha-1+\frac{(\alpha-1)\alpha}{\phi-\alpha}}\Big( \frac{\alpha}{\delta\phi}\Big)^{\frac{\alpha}{\phi-\alpha}}+1-\delta \Big( \frac{\alpha}{\delta\phi}\Big)^{\frac{\phi}{\phi-\alpha}}k_{t+1}^{\frac{(\alpha-1)\phi}{\phi-\alpha}}\exp\Big(x_{t+1}\frac{(1-\alpha)\phi}{\phi-\alpha}\Big) \bigg]
 	\end{align}
@@ -135,9 +87,10 @@ with the elements being given by the equations below.
 	\exp\Big( \Big[ 1-\alpha+\frac{(1-\alpha)\alpha}{\phi-\alpha} \Big]x_{t} \Big)k_{t}^{\alpha+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \Big( \frac{\alpha}{\delta\phi}\Big)^{\frac{\alpha}{\phi-\alpha}}+k_{t}-\delta \Big( \frac{\alpha}{\delta\phi}\Big)^{\frac{\phi}{\phi-\alpha}}\exp\Big( \frac{(1-\alpha)\phi}{\phi-\alpha}x_{t} \Big)k_{t}^{1+\frac{(\alpha-1)\phi}{\phi-\alpha}}-c_{t}-k_{t+1}
 	\end{align}
 	\begin{align}
-	x_{t-1} - \rho x_{t}
+	x_{t+1} - \rho x_{t}
 	\end{align}
-Now we take the partial derivatives w.r.t.\ $c_{t},c_{t+1},k_{t},k_{t+1},x_{t},x_{t+1}$ for all three equations evaluated at the steady state. First the Euler error:
+\normalsize	
+Now we take the partial derivatives w.r.t.\ $c_{t},c_{t+1},k_{t},k_{t+1},x_{t},x_{t+1}$ for all three equations evaluated at the steady state. First the Euler error partial derivatives evaluated at the steady state:
 	\begin{align*}
 	\frac{\partial}{c_{t}}(1) 		&= -\beta\bigg[\alpha  k_{*}^{\alpha-1+\frac{(\alpha-1)\alpha}{\phi-\alpha}}\Big( \frac{\alpha}{\delta\phi}\Big)^{\frac{\alpha}{\phi-\alpha}}+1-\delta \Big( \frac{\alpha}{\delta\phi}\Big)^{\frac{\phi}{\phi-\alpha}}k_{*}^{\frac{(\alpha-1)\phi}{\phi-\alpha}} \bigg] \\
 	\frac{\partial}{k_{t}}(1) 		&= 0\\
@@ -146,7 +99,7 @@ Now we take the partial derivatives w.r.t.\ $c_{t},c_{t+1},k_{t},k_{t+1},x_{t},x
 	\frac{\partial}{k_{t+1}}(1) 	&= -\beta c_{*} \bigg[\alpha \Big( \alpha-1+\frac{(\alpha-1)\alpha}{\phi-\alpha} \Big) k_{*}^{\alpha-2+\frac{(\alpha-1)\alpha}{\phi-\alpha}}\Big( \frac{\alpha}{\delta\phi}\Big)^{\frac{\alpha}{\phi-\alpha}}-\delta \Big( \frac{\alpha}{\delta\phi}\Big)^{\frac{\phi}{\phi-\alpha}}k_{*}^{\frac{(\alpha-1)\phi}{\phi-\alpha}-1}\Big( \frac{(\alpha-1)\phi}{\phi-\alpha}\Big) \bigg]\\
 	\frac{\partial}{x_{t+1}}(1) 	&= -\beta c_{*}\bigg[\alpha \big[1-\alpha+\frac{(1-\alpha)\alpha}{\phi-\alpha} \big] k_{*}^{\alpha-1+\frac{(\alpha-1)\alpha}{\phi-\alpha}}\Big( \frac{\alpha}{\delta\phi}\Big)^{\frac{\alpha}{\phi-\alpha}}-\delta \Big( \frac{\alpha}{\delta\phi}\Big)^{\frac{\phi}{\phi-\alpha}}k_{*}^{\frac{(\alpha-1)\phi}{\phi-\alpha}}\frac{(1-\alpha)\phi}{\phi-\alpha} \bigg]
 	\end{align*}
-Now the resource constraint:
+Now the law of motion for capital's partial derivatives evaluated at the steady state:
 	\begin{align*}
 	\frac{\partial}{c_{t}}(2) 		&= -1\\
 	\frac{\partial}{k_{t}}(2) 		&= \Big( \alpha+\frac{(\alpha-1)\alpha}{\phi-\alpha} \Big)k_{*}^{\alpha-1+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \Big( \frac{\alpha}{\delta\phi}\Big)^{\frac{\alpha}{\phi-\alpha}}+1-\delta \Big( \frac{\alpha}{\delta\phi}\Big)^{\frac{\phi}{\phi-\alpha}} \Big( 1+\frac{(\alpha-1)\phi}{\phi-\alpha} \Big) k_{*}^{\frac{(\alpha-1)\phi}{\phi-\alpha}} \\
@@ -155,7 +108,7 @@ Now the resource constraint:
 	\frac{\partial}{k_{t+1}}(2) 	&= -1\\
 	\frac{\partial}{x_{t+1}}(2) 	&= 0
 	\end{align*}	
-And lastly the error term from the law of motion for $x$:
+And lastly the error term from the law of motion for $x$'s partial derivatives evaluated at the steady state:
 	\begin{align*}
 	\frac{\partial}{c_{t}}(3) 		&= 0 \\
 	\frac{\partial}{k_{t}}(3) 		&= 0 \\
@@ -168,13 +121,38 @@ We have the two matrices
 	\begin{align*}
 	D \mathbf F_1(\cdot) = \begin{pmatrix} \frac{\partial}{\partial c_{t}}(1) & \frac{\partial}{\partial k_t}(1) & \frac{\partial}{\partial x_t}(1) \\ \frac{\partial}{\partial c_{t}}(2) & \frac{\partial}{\partial k_t}(2) & \frac{\partial}{\partial x_t}(2) \\ \frac{\partial}{\partial c_{t}}(3) & \frac{\partial}{\partial k_t}(3) & \frac{\partial}{\partial x_t}(3)  \end{pmatrix},\
 	D \mathbf F_2(\cdot) = \begin{pmatrix} \frac{\partial}{\partial c_{t+1}}(1) & \frac{\partial}{\partial k_{t+1}}(1) & \frac{\partial}{\partial x_{t+1}}(1) \\ \frac{\partial}{\partial c_{t+1}}(2) & \frac{\partial}{\partial k_{t+1}}(2) & \frac{\partial}{\partial x_{t+1}}(2) \\ \frac{\partial}{\partial c_{t+1}}(3) & \frac{\partial}{\partial k_{t+1}}(3) & \frac{\partial}{\partial x_{t+1}}(3)  \end{pmatrix}
-	\end{align*}	
+	\end{align*}
+Due to the complexity of the following operation we do not provide any detailed analytical description, but it follows that we have the Jacobian of the state space given by
+	\begin{align*}
+	\mathbf J = - D \mathbf F_2(\mathbf s_*,\mathbf s_*)^{-1} D \mathbf F_1(\mathbf s_*,\mathbf s_*)
+	\end{align*}
+The result is a 3$\times$3 matrix. We then proceed in the exact same way as we did in the fourth and fifth exercise session, so any details beyond the policy functions are omitted. 
+
+\textit{Note:} our policy function is written to match the dynare output, so we take deviations as the input.
 	
 
-
-
-
-
+\newpage
+\subsection{(d) IRFs}
+	\begin{figure}[!h]
+	\centering
+	\caption{(i): $\phi = 1.5,\ \delta = 0.0285,\ \rho = 0.9$}
+	\includegraphics[width=\textwidth]{param1.png}
+	\end{figure}
+	\begin{figure}[!h]
+	\centering
+	\caption{(ii): $\phi = 1.5,\ \delta = 0.9,\ \rho = 0.9$}
+	\includegraphics[width=\textwidth]{param2.png}
+	\end{figure}
+		\begin{figure}[!h]
+	\centering
+	\caption{(iii): $\phi = 1.5,\ \delta = 0.0285,\ \rho = 0.99$}
+	\includegraphics[width=\textwidth]{param3.png}
+	\end{figure}
+		\begin{figure}[!h]
+	\centering
+	\caption{(iv): $\phi = 1.1,\ \delta = 0.0285,\ \rho = 0.9$}
+	\includegraphics[width=\textwidth]{param4.png}
+	\end{figure}
 
 
 
