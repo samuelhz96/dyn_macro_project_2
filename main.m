@@ -104,18 +104,36 @@ deltaSS = @(kss) P.delta.*adpphi.*kss.^(((P.alpha-1).*P.phi)/(P.phi-P.alpha));
 % Steady state capital utiliuzation
 USS = @(kss) (P.alpha./(P.delta.*P.phi)).^(1./(P.phi-P.alpha)).*kss.^((P.alpha-1)./(P.phi-P.alpha));
 
+% Elements of the Jacobian:
+EE_ct = @(kss) -P.beta.* (P.alpha.*kss.^(P.alpha-1+((P.alpha.^2-P.alpha)/(P.phi-P.alpha))).*adpalpha + 1 - P.delta.*adpphi.*kss.^((P.alpha.*P.phi-P.phi)/(P.phi-P.alpha)));
+EE_kt = @(kss) 0.*kss;
+EE_xt = @(kss) 0.*kss;
+
+EE_ctt = @(kss) kss./kss;
+EE_ktt = @(kss) -P.beta.*cSS(kss).*( P.alpha.*(P.alpha-1+((P.alpha.^2-P.alpha)/(P.phi-P.alpha))).*adpalpha.*kss.^(P.alpha-2+((P.alpha.^2-P.alpha)/(P.phi-P.alpha)))-P.delta.*adpphi.*((P.alpha.*P.phi-P.phi)/(P.phi-P.alpha)).*kss.^(((P.alpha.*P.phi-P.phi)/(P.phi-P.alpha))-1));
+EE_xtt = @(kss) -P.beta.*cSS(kss).*( (P.alpha-P.alpha.^2+((P.alpha^2-P.alpha^3)/(P.phi-P.alpha))).*adpalpha.*kss.^(P.alpha-1+((P.alpha^2-P.alpha)/(P.phi-P.alpha)))-P.delta.*adpphi.*((P.phi-P.alpha.*P.phi)/(P.phi-P.alpha)).*kss.^((P.alpha.*P.phi-P.phi)/(P.phi-P.alpha)));
+
+LMK_ct = @(kss) -kss./kss;
+LMK_kt = @(kss) (P.alpha+((P.alpha.^2-P.alpha)/(P.phi-P.alpha))).*kss.^(P.alpha+((P.alpha.^2-P.alpha)/(P.phi-P.alpha))-1).*adpalpha+1-P.delta.*adpphi.*(1+((P.alpha.*P.phi-P.phi)/(P.phi-P.alpha))).*kss.^((P.alpha.*P.phi-P.phi)/(P.phi-P.alpha));
+LMK_xt = @(kss) (1-P.alpha+((P.alpha.^2-P.alpha)/(P.phi-P.alpha))).*adpalpha.*kss.^(P.alpha+((P.alpha.^2-P.alpha)/(P.phi-P.alpha)))-P.delta.*adpphi.*((P.phi-P.phi.*P.alpha)/(P.phi-P.alpha)).*kss.^(1+((P.phi.*P.alpha-P.phi)/(P.phi-P.alpha)));
+
+LMK_ctt = @(kss) 0.*kss;
+LMK_ktt = @(kss) -kss./kss;
+LMK_xtt = @(kss) 0.*kss;
+
+LMX_ct = @(kss) 0.*kss;
+LMX_kt = @(kss) 0.*kss;
+LMX_xt = @(kss) -P.rho;
+
+LMX_ctt = @(kss) 0.*kss;
+LMX_ktt = @(kss) 0.*kss;
+LMX_xtt = @(kss) kss./kss;
+
 % Step 1: DF_1(*)
-DF1 = [
-    -P.beta.*(P.alpha.*USS(kss).^(P.alpha).*kss.^(P.alpha-1)+1-P.delta.*USS(kss).^P.phi), 0, 0, 0;
-    0, 0, 0, 0;
-    -1, P.delta.*P.phi.*USS(kss).^(P.phi-1).*kss+P.alpha.*kss.^(P.alpha).*USS(kss).^(P.alpha-1), (1-P.delta.*USS(kss).^P.phi)+P.alpha.*kss.^(P.alpha-1).*USS(kss).^(P.alpha), (1-P.alpha).*(kss.*USS(kss)).^(P.alpha);
-    0, 0, 0, -P.rho];
+DF1 = [EE_ct(kss) EE_kt(kss) EE_xt(kss); LMK_ct(kss) LMK_kt(kss) LMK_xt(kss); LMX_ct(kss) LMX_kt(kss) LMX_xt(kss)];
 
 % Step 2: DF_2(*)
-DF2 = [1, -P.beta.*cSS(kss).*(P.alpha.^2.*(kss.*USS(kss)).^(P.alpha-1)+1-P.delta.*P.phi.*USS(kss).^(P.phi-1)), -P.beta.*cSS(kss).*P.alpha.*(P.alpha-1).*USS(kss).^(P.alpha).*kss.^(P.alpha-2), -P.beta.*cSS(kss).*P.alpha.*(1-P.alpha).*kss.^(P.alpha-1);
-0, 1, -adp.*((P.alpha-1)./(P.phi-P.alpha)).*kss.^(((P.alpha-1)./(P.phi-P.alpha))-1), -adp.*((1-P.alpha)./(P.phi-P.alpha)).*kss.^((P.alpha-1)./(P.phi-P.alpha));
-0, 0, -1, 0;
-0, 0, 0, 1];
+DF2 = [EE_ctt(kss) EE_ktt(kss) EE_xtt(kss); LMK_ctt(kss) LMK_ktt(kss) LMK_xtt(kss); LMX_ctt(kss) LMX_ktt(kss) LMX_xtt(kss)];
 
 % Step 3: Build Jacobian
 Jac = -(inv(DF2))*DF1;
@@ -127,17 +145,16 @@ idx_stable      = find(abs(eigvals)<1); % Index of stable eigenvalues
 eigvals_stable  = eigvals(idx_stable)   % Retrieves stable eigenvalues fromv vector
 eigvecs_stable  = V(:,idx_stable); 
     
-ukx_eigvecs = eigvecs_stable(2:4,:);
+ukx_eigvecs = eigvecs_stable(1:2,:);
 c_eigvecs = eigvecs_stable(1,:);
    
 inv_ukx_eigvecs= inv(ukx_eigvecs);
    
 const1= c_eigvecs*inv_ukx_eigvecs(:,1);
 const2= c_eigvecs*inv_ukx_eigvecs(:,2);
-const3= c_eigvecs*inv_ukx_eigvecs(:,3);
    
-G1= Jac(3,1).*const2+Jac(3,3)
-G2= Jac(3,1).*const3+Jac(3,4)
+G1= Jac(2,1).*const1+Jac(2,2)
+G2= Jac(2,1).*const2+Jac(2,3)
 G0 = kss
 
     
