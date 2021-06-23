@@ -84,7 +84,7 @@ Now we write this system of equations as follows:
 		c_{t+1} - \beta c_t  \Big[ \alpha \exp(x_{t+1})^{1-\alpha} U_{t+1}^{\alpha} k_{t+1}^{\alpha-1} + 1 - \delta U_{t+1}^{\phi} \Big] \\
 		U_{t+1} - \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{1}{\phi-\alpha}} \exp\Big(\frac{1-\alpha}{\phi-\alpha}x_{t+1}\Big)k_{t+1}^{\frac{\alpha-1}{\phi-\alpha}} \\
 		\exp\big([{1-\alpha}]x_{t}\big)(k_t U_t)^{\alpha} + (1-\delta U_t^{\phi})k_t - c_t - k_{t+1} \\
-		x_{t-1} - \rho x_{t}
+		x_{t+1} - \rho x_{t}
 		\end{pmatrix},
 	\end{align*}
 where we have $\mathbb E_t \mathbf F(\mathbf s_{t+1},\mathbf s_{t}) = \mathbf 0$. 
@@ -113,8 +113,62 @@ Next up is the second matrix containing the partial derivatives w.r.t.\ the peri
 		0 & 0 & 0 & 1 \\
 		\end{pmatrix}
 	\end{align*}	
-We use this matrix in MATLAB. 	
-	
+We use this matrix in MATLAB. 
+\newpage
+\textbf{Alternative: 3-Equation System}
+	\begin{align*}
+	U_{t+1}^{\alpha} 	&= \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\alpha}{\phi-\alpha}} \exp\Big(\frac{(1-\alpha)\alpha}{\phi-\alpha}x_{t+1}\Big)k_{t+1}^{\frac{(\alpha-1)\alpha}{\phi-\alpha}} \\
+	U_{t+1}^{\phi} 		&= \Big( \frac{\alpha}{\delta\phi} \Big)^{\frac{\phi}{\phi-\alpha}} \exp\Big(\frac{(1-\alpha)\phi}{\phi-\alpha}x_{t+1}\Big)k_{t+1}^{\frac{(\alpha-1)\phi}{\phi-\alpha}}
+	\end{align*}
+Now we have
+	\begin{align*}
+	\mathbf F(\mathbf s_{t+1},\mathbf s_{t}) = 
+		\begin{pmatrix}
+		(1) \\ (2) \\ (3)
+		\end{pmatrix},	
+	\end{align*}	
+with the elements being given by the equations below.
+	\begin{align}
+	c_{t+1}-\beta c_{t} \bigg[\alpha \exp\Big( \big[1-\alpha+\frac{(1-\alpha)\alpha}{\phi-\alpha} \big] x_{t+1} \Big) k_{t+1}^{\alpha-1+\frac{(\alpha-1)\alpha}{\phi-\alpha}}\Big( \frac{\alpha}{\delta\phi}\Big)^{\frac{\alpha}{\phi-\alpha}}+1-\delta \Big( \frac{\alpha}{\delta\phi}\Big)^{\frac{\phi}{\phi-\alpha}}k_{t+1}^{\frac{(\alpha-1)\phi}{\phi-\alpha}}\exp\Big(x_{t+1}\frac{(1-\alpha)\phi}{\phi-\alpha}\Big) \bigg]
+	\end{align}
+	\begin{align}
+	\exp\Big( \Big[ 1-\alpha+\frac{(1-\alpha)\alpha}{\phi-\alpha} \Big]x_{t} \Big)k_{t}^{\alpha+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \Big( \frac{\alpha}{\delta\phi}\Big)^{\frac{\alpha}{\phi-\alpha}}+k_{t}-\delta \Big( \frac{\alpha}{\delta\phi}\Big)^{\frac{\phi}{\phi-\alpha}}\exp\Big( \frac{(1-\alpha)\phi}{\phi-\alpha}x_{t} \Big)k_{t}^{1+\frac{(\alpha-1)\phi}{\phi-\alpha}}-c_{t}-k_{t+1}
+	\end{align}
+	\begin{align}
+	x_{t-1} - \rho x_{t}
+	\end{align}
+Now we take the partial derivatives w.r.t.\ $c_{t},c_{t+1},k_{t},k_{t+1},x_{t},x_{t+1}$ for all three equations evaluated at the steady state. First the Euler error:
+	\begin{align*}
+	\frac{\partial}{c_{t}}(1) 		&= -\beta\bigg[\alpha  k_{*}^{\alpha-1+\frac{(\alpha-1)\alpha}{\phi-\alpha}}\Big( \frac{\alpha}{\delta\phi}\Big)^{\frac{\alpha}{\phi-\alpha}}+1-\delta \Big( \frac{\alpha}{\delta\phi}\Big)^{\frac{\phi}{\phi-\alpha}}k_{*}^{\frac{(\alpha-1)\phi}{\phi-\alpha}} \bigg] \\
+	\frac{\partial}{k_{t}}(1) 		&= 0\\
+	\frac{\partial}{x_{t}}(1) 		&= 0\\
+	\frac{\partial}{c_{t+1}}(1) 	&= 1\\			
+	\frac{\partial}{k_{t+1}}(1) 	&= -\beta c_{*} \bigg[\alpha \Big( \alpha-1+\frac{(\alpha-1)\alpha}{\phi-\alpha} \Big) k_{*}^{\alpha-2+\frac{(\alpha-1)\alpha}{\phi-\alpha}}\Big( \frac{\alpha}{\delta\phi}\Big)^{\frac{\alpha}{\phi-\alpha}}-\delta \Big( \frac{\alpha}{\delta\phi}\Big)^{\frac{\phi}{\phi-\alpha}}k_{*}^{\frac{(\alpha-1)\phi}{\phi-\alpha}-1}\Big( \frac{(\alpha-1)\phi}{\phi-\alpha}\Big) \bigg]\\
+	\frac{\partial}{x_{t+1}}(1) 	&= -\beta c_{*}\bigg[\alpha \big[1-\alpha+\frac{(1-\alpha)\alpha}{\phi-\alpha} \big] k_{*}^{\alpha-1+\frac{(\alpha-1)\alpha}{\phi-\alpha}}\Big( \frac{\alpha}{\delta\phi}\Big)^{\frac{\alpha}{\phi-\alpha}}-\delta \Big( \frac{\alpha}{\delta\phi}\Big)^{\frac{\phi}{\phi-\alpha}}k_{*}^{\frac{(\alpha-1)\phi}{\phi-\alpha}}\frac{(1-\alpha)\phi}{\phi-\alpha} \bigg]
+	\end{align*}
+Now the resource constraint:
+	\begin{align*}
+	\frac{\partial}{c_{t}}(2) 		&= -1\\
+	\frac{\partial}{k_{t}}(2) 		&= \Big( \alpha+\frac{(\alpha-1)\alpha}{\phi-\alpha} \Big)k_{*}^{\alpha-1+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \Big( \frac{\alpha}{\delta\phi}\Big)^{\frac{\alpha}{\phi-\alpha}}+1-\delta \Big( \frac{\alpha}{\delta\phi}\Big)^{\frac{\phi}{\phi-\alpha}} \Big( 1+\frac{(\alpha-1)\phi}{\phi-\alpha} \Big) k_{*}^{\frac{(\alpha-1)\phi}{\phi-\alpha}} \\
+	\frac{\partial}{x_{t}}(2) 		&= \Big[ 1-\alpha+\frac{(1-\alpha)\alpha}{\phi-\alpha} \Big]k_{*}^{\alpha+\frac{(\alpha-1)\alpha}{\phi-\alpha}} \Big( \frac{\alpha}{\delta\phi}\Big)^{\frac{\alpha}{\phi-\alpha}}-\delta \Big( \frac{\alpha}{\delta\phi}\Big)^{\frac{\phi}{\phi-\alpha}}\frac{(1-\alpha)\phi}{\phi-\alpha}k_{*}^{1+\frac{(\alpha-1)\phi}{\phi-\alpha}} \\
+	\frac{\partial}{c_{t+1}}(2) 	&= 0\\			
+	\frac{\partial}{k_{t+1}}(2) 	&= -1\\
+	\frac{\partial}{x_{t+1}}(2) 	&= 0
+	\end{align*}	
+And lastly the error term from the law of motion for $x$:
+	\begin{align*}
+	\frac{\partial}{c_{t}}(3) 		&= 0 \\
+	\frac{\partial}{k_{t}}(3) 		&= 0 \\
+	\frac{\partial}{x_{t}}(3) 		&= -\rho \\
+	\frac{\partial}{c_{t+1}}(3) 	&= 0 \\			
+	\frac{\partial}{k_{t+1}}(3) 	&= 0 \\
+	\frac{\partial}{x_{t+1}}(3) 	&= 1
+	\end{align*}
+We have the two matrices
+	\begin{align*}
+	D \mathbf F_1(\cdot) = \begin{pmatrix} \frac{\partial}{\partial c_{t}}(1) & \frac{\partial}{\partial k_t}(1) & \frac{\partial}{\partial x_t}(1) \\ \frac{\partial}{\partial c_{t}}(2) & \frac{\partial}{\partial k_t}(2) & \frac{\partial}{\partial x_t}(2) \\ \frac{\partial}{\partial c_{t}}(3) & \frac{\partial}{\partial k_t}(3) & \frac{\partial}{\partial x_t}(3)  \end{pmatrix},\
+	D \mathbf F_2(\cdot) = \begin{pmatrix} \frac{\partial}{\partial c_{t+1}}(1) & \frac{\partial}{\partial k_{t+1}}(1) & \frac{\partial}{\partial x_{t+1}}(1) \\ \frac{\partial}{\partial c_{t+1}}(2) & \frac{\partial}{\partial k_{t+1}}(2) & \frac{\partial}{\partial x_{t+1}}(2) \\ \frac{\partial}{\partial c_{t+1}}(3) & \frac{\partial}{\partial k_{t+1}}(3) & \frac{\partial}{\partial x_{t+1}}(3)  \end{pmatrix}
+	\end{align*}	
 	
 
 
