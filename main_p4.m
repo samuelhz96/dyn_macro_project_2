@@ -162,14 +162,12 @@ G0 = kss
 
 
 T = 100;
-sigma = (0.0005)^(0.5);
-eps = [sigma zeros(1,T)];            
 dc = nan(1,T+1);
 dk = [0,nan(1,T)];
-dx = [0,nan(1,T)];
+dx = [(0.0005)^(0.5),nan(1,T)];
 for t=1:T
     % Do one step and repeat T times
-    [dc1,dk1,dz1] = lineartransition(P,dk(t),dx(t)+eps(t),1); 
+    [dc1,dk1,dz1] = lineartransition(P,dk(t),dx(t),1); 
     
     dc([t,t+1]) = dc1;
     dk(t+1) = dk1(2);

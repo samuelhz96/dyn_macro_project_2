@@ -161,7 +161,6 @@ G0 = kss
 
 
 T = 100;
-eps = [sigma zeros(1,T)];            
 dc = nan(1,T+1);
 dk = [0,nan(1,T)];
 dx = [(0.0005)^(0.5),nan(1,T)];
