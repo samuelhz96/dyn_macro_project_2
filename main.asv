@@ -12,8 +12,13 @@
 % discounted, two-period utility of the agent
 
 % Load parameters:
-parameters;
-disp(P)
+parameters1;
+% Load alternative parameters (comment out unused)
+%parameters2
+%parameters3
+%parameters4
+
+disp(P);
 
 
 
@@ -29,7 +34,7 @@ fun = @(x) P.beta.*(P.alpha.*(P.alpha.*(P.delta.*P.phi).^(-1).*x.^(P.alpha-1)).^
 c = 1:0.1:100;
 
 % Plot the function defined above:
-plot(c,fun(c));
+%plot(c,fun(c));
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -83,55 +88,122 @@ ybar == cbar + ibar
 kss = x;
 
 % Shortcut for often used term
-adp = P.alpha./(P.delta.*P.phi);
+adp = (P.alpha./(P.delta.*P.phi)).^(1./(P.phi-P.alpha));
+adpphi = (P.alpha./(P.delta.*P.phi)).^(P.phi./(P.phi-P.alpha));
+adpalpha = (P.alpha./(P.delta.*P.phi)).^(P.alpha./(P.phi-P.alpha));
 
 % Steady state consumption as function of steady state capital and parameters
-cSS = @(kss) kss.^(P.alpha+(((P.alpha-1).*P.alpha)/(P.phi-P.alpha))).*(adp).^(P.alpha./(P.phi-P.alpha))-P.delta.*(adp).^(P.phi./(P.phi-P.alpha)).*kss.^(1+(((P.alpha-1).*P.phi)/(P.phi-P.alpha)));
+cSS = @(kss) kss.^(P.alpha+(((P.alpha-1).*P.alpha)/(P.phi-P.alpha))).*adpalpha-P.delta.*adpphi.*kss.^(1+(((P.alpha-1).*P.phi)/(P.phi-P.alpha)));
 
 % Steady state derivative of output w.r.t. capital as function of steady state capital and parameters
-dySS = @(kss) P.alpha.*adp.^(P.alpha./(P.phi-P.alpha)).*kss.^(P.alpha-1+(((P.alpha-1).*P.alpha)./(P.phi-P.alpha)));
+dySS = @(kss) P.alpha.*adpalpha.*kss.^(P.alpha-1+(((P.alpha-1).*P.alpha)./(P.phi-P.alpha)));
 
 % Steady state depreciation as function of steady state capital and parameters
-deltaSS = @(kss) P.delta.*adp.^(P.phi./(P.phi-P.alpha)).*kss.^(((P.alpha-1).*P.phi)/(P.phi-P.alpha));
+deltaSS = @(kss) P.delta.*adpphi.*kss.^(((P.alpha-1).*P.phi)/(P.phi-P.alpha));
 
-% Bracket of Euler at steady state:
-bracketEULER = @(kss) dySS(kss)-deltaSS(kss)+1;
+% Steady state capital utiliuzation
+USS = @(kss) (P.alpha./(P.delta.*P.phi)).^(1./(P.phi-P.alpha)).*kss.^((P.alpha-1)./(P.phi-P.alpha));
 
-% Step 1: 
-% Partial derivatives of consumption in period t+1 at steady state
-dcttdkt = @(kss) 0.*kss;         % not actually needed but for completeness
-dcttdktt = @(kss) (P.alpha+(((P.alpha-1).*P.alpha)/(P.phi-P.alpha))).*adp.^(P.alpha./(P.phi-P.alpha)).*kss.^(P.alpha-1+(((P.alpha-1).*P.alpha)./(P.phi-P.alpha)))-P.delta.*adp.^(P.phi./(P.phi-P.alpha)).*(1+(((P.alpha-1).*P.phi)/(P.phi-P.alpha))).*kss.^(((P.alpha-1).*P.phi)/(P.phi-P.alpha));
-dcttdkttt = @(kss) -kss./kss;
-dcttdzt = @(kss) P.rho.*(1-P.alpha+(((1-P.alpha).*P.alpha)/(P.phi-P.alpha))).*kss.^(P.alpha+(((P.alpha-1).*P.alpha)/(P.phi-P.alpha))).*(adp).^(P.alpha./(P.phi-P.alpha))-P.rho.*(1-P.alpha+(((1-P.alpha).*P.phi)/(P.phi-P.alpha))).*P.delta.*(adp).^(P.phi./(P.phi-P.alpha)).*kss.^(1+(((P.alpha-1).*P.phi)/(P.phi-P.alpha)));
-dcttdztt = @(kss) (1-P.alpha+(((1-P.alpha).*P.alpha)/(P.phi-P.alpha))).*adp.^(P.alpha./(P.phi-P.alpha)).*kss.^(P.alpha+(((P.alpha-1).*P.alpha)/(P.phi-P.alpha)))-P.delta.*adp.^(P.phi/(P.phi-P.alpha)).*(((1-P.alpha).*P.phi)/(P.phi-P.alpha)).*kss.^(1+(((P.alpha-1).*P.phi)/(P.phi-P.alpha)));
+% Elements of the Jacobian:
+EE_ct = @(kss) -P.beta.* (P.alpha.*kss.^(P.alpha-1+((P.alpha.^2-P.alpha)/(P.phi-P.alpha))).*adpalpha + 1 - P.delta.*adpphi.*kss.^((P.alpha.*P.phi-P.phi)/(P.phi-P.alpha)));
+EE_kt = @(kss) 0.*kss;
+EE_xt = @(kss) 0.*kss;
 
-% Step 2: 
-% Partial derivatives of consumption in period t at steady state
-dctdkt = @(kss) (P.alpha+(((1-P.alpha).*P.alpha)/(P.phi-P.alpha))).*adp.^(P.alpha./(P.phi-P.alpha)).*kss.^(P.alpha-1+(((P.alpha-1).*P.alpha)/(P.phi-P.alpha)))+1-P.delta.*adp.^(P.phi./(P.phi-P.alpha)).*((((P.alpha-1).*P.phi)/(P.phi-P.alpha)));
-dctdktt = @(kss) -kss./kss;
-dctdkttt = @(kss) 0.*kss;
-dctdzt = @(kss) (1-P.alpha+(((1-P.alpha).*P.alpha)/(P.phi-P.alpha))).*adp.^(P.alpha./(P.phi-P.alpha)).*kss.^(P.alpha+(((P.alpha-1).*P.alpha)/(P.phi-P.alpha)))-P.delta.*adp.^(P.phi./(P.phi-P.alpha)).*(((1-P.alpha).*P.phi)/(P.phi-P.alpha)).*kss.^(1+(((P.alpha-1).*P.phi)/(P.phi-P.alpha)));
-dctdztt = @(kss) 0.*kss;
+EE_ctt = @(kss) kss./kss;
+EE_ktt = @(kss) -P.beta.*cSS(kss).*( P.alpha.*(P.alpha-1+((P.alpha.^2-P.alpha)/(P.phi-P.alpha))).*adpalpha.*kss.^(P.alpha-2+((P.alpha.^2-P.alpha)/(P.phi-P.alpha)))-P.delta.*adpphi.*((P.alpha.*P.phi-P.phi)/(P.phi-P.alpha)).*kss.^(((P.alpha.*P.phi-P.phi)/(P.phi-P.alpha))-1));
+EE_xtt = @(kss) -P.beta.*cSS(kss).*( (P.alpha-P.alpha.^2+((P.alpha^2-P.alpha^3)/(P.phi-P.alpha))).*adpalpha.*kss.^(P.alpha-1+((P.alpha^2-P.alpha)/(P.phi-P.alpha)))-P.delta.*adpphi.*((P.phi-P.alpha.*P.phi)/(P.phi-P.alpha)).*kss.^((P.alpha.*P.phi-P.phi)/(P.phi-P.alpha)));
 
-% Step 3:
-% Partual derivatives of the f_{k_{t+1}}-delta_{t+1} at steady state
-dbracketdkt = @(kss) 0.*kss;
-dbracketdktt = @(kss) (P.alpha-1+(((P.alpha-1).*P.alpha)/(P.phi-P.alpha))).*P.alpha.*adp.^(P.alpha./(P.phi-P.alpha)).*kss.^(P.alpha-2+(((P.alpha-1).*P.alpha)/(P.phi-P.alpha)))-P.delta.*adp.^(P.phi./(P.phi-P.alpha)).*(((P.alpha-1).*P.phi)/(P.phi-P.alpha)).*kss.^((((P.alpha-1).*P.phi)./(P.phi-P.alpha))-1);
-dbracketdkttt = @(kss) 0.*kss;
-dbracketdzt = @(kss) P.rho.*(1-P.alpha+(((1-P.alpha).*P.alpha)/(P.phi-P.alpha))).*dySS(kss) - P.rho.*(((1-P.alpha).*P.phi)/(P.phi-P.alpha)).*deltaSS(kss);
-dbracketdztt = @(kss) (1-P.alpha+(((1-P.alpha).*P.alpha)/(P.phi-P.alpha))).*dySS(kss) - (((1-P.alpha).*P.phi)/(P.phi-P.alpha)).*deltaSS(kss);
+LMK_ct = @(kss) -kss./kss;
+LMK_kt = @(kss) (P.alpha+((P.alpha.^2-P.alpha)/(P.phi-P.alpha))).*kss.^(P.alpha+((P.alpha.^2-P.alpha)/(P.phi-P.alpha))-1).*adpalpha+1-P.delta.*adpphi.*(1+((P.alpha.*P.phi-P.phi)/(P.phi-P.alpha))).*kss.^((P.alpha.*P.phi-P.phi)/(P.phi-P.alpha));
+LMK_xt = @(kss) (1-P.alpha+((P.alpha.^2-P.alpha)/(P.phi-P.alpha))).*adpalpha.*kss.^(P.alpha+((P.alpha.^2-P.alpha)/(P.phi-P.alpha)))-P.delta.*adpphi.*((P.phi-P.phi.*P.alpha)/(P.phi-P.alpha)).*kss.^(1+((P.phi.*P.alpha-P.phi)/(P.phi-P.alpha)));
 
-% Construct the elements for the matrices of the State Space Approach:
-V1 = @(kss) dcttdkt(kss) - P.beta.*(cSS(kss).*dbracketdkt(kss) + bracketEULER(kss).*dctdkt(kss));
-V2 = @(kss) dcttdktt(kss) - P.beta.*(cSS(kss).*dbracketdktt(kss) + bracketEULER(kss).*dctdktt(kss));
-V3 = @(kss) dcttdkttt(kss) - P.beta.*(cSS(kss).*dbracketdktt(kss) + bracketEULER(kss).*dctdkttt(kss));
-V4 = @(kss) dcttdzt(kss) - P.beta.*(cSS(kss).*dbracketdzt(kss) + bracketEULER(kss).*dctdzt(kss));
-V5 = @(kss) dcttdztt(kss) - P.beta.*(cSS(kss).*dbracketdztt(kss) + bracketEULER(kss).*dctdztt(kss));
+LMK_ctt = @(kss) 0.*kss;
+LMK_ktt = @(kss) -kss./kss;
+LMK_xtt = @(kss) 0.*kss;
+
+LMX_ct = @(kss) 0.*kss;
+LMX_kt = @(kss) 0.*kss;
+LMX_xt = @(kss) -P.rho;
+
+LMX_ctt = @(kss) 0.*kss;
+LMX_ktt = @(kss) 0.*kss;
+LMX_xtt = @(kss) kss./kss;
+
+% Step 1: DF_1(*)
+DF1 = [EE_ct(kss) EE_kt(kss) EE_xt(kss); LMK_ct(kss) LMK_kt(kss) LMK_xt(kss); LMX_ct(kss) LMX_kt(kss) LMX_xt(kss)];
+
+% Step 2: DF_2(*)
+DF2 = [EE_ctt(kss) EE_ktt(kss) EE_xtt(kss); LMK_ctt(kss) LMK_ktt(kss) LMK_xtt(kss); LMX_ctt(kss) LMX_ktt(kss) LMX_xtt(kss)];
+
+% Step 3: Build Jacobian
+Jac = -(inv(DF2))*DF1;
+
+[V,D]           = eig(Jac);               % V = Matrix of eigenvectors, D = diagonal Matrix with eigenvalues on diagonal
+eigvals         = diag(D);              % Retireives eigenvalues from D and stores them in a vector 
+idx_stable      = find(abs(eigvals)<1); % Index of stable eigenvalues (eigenvalues with |lambda| < 1)
+eigvals_stable  = eigvals(idx_stable);  % Retrieves only stable eigenvalues fromv vecotr
+eigvecs_stable  = V(:,idx_stable);      % Retrieves corresponding egenvectors
+
+% Store values in the parameters object:
+P.e1 = eigvals_stable(1);
+P.e2 = eigvals_stable(2);
+P.v1 = eigvecs_stable(:,1);
+P.v2 = eigvecs_stable(:,2);
+P.kss = kss;
+P.cSS = cSS(kss);
+P.zSS = 1;
+
+Gamma_vec_1 = [P.v1(1) P.v2(1)];
+Gamma_vec_2 = [P.v1(2) P.v2(2); P.v1(3) P.v2(3)]
+Gamma_vec = Gamma_vec_1*inv(Gamma_vec_2)
+   
+G1= Jac(2,1).*Gamma_vec(1)+Jac(2,2)
+G2= Jac(2,1).*Gamma_vec(2)+Jac(2,3)
+G0 = kss
 
 
-A = [V3(kss) V2(kss) V5(kss); 0 1 0; 0 0 1];
-B = [0 V1(kss) V4(kss); -1 0 0; 0 0 -P.rho];
+T = 100;
+sigma = 0.005;
+eps = [sigma zeros(1,T)];            
+dc = nan(1,T+1);
+dk = [0,nan(1,T)];
+dx = [0,nan(1,T)];
+for t=1:T
+    % Do one step and repeat T times
+    [dc1,dk1,dz1] = lineartransition(P,dk(t),dx(t)+eps(t),1); 
+    
+    dc([t,t+1]) = dc1;
+    dk(t+1) = dk1(2);
+    dx(t+1) = dz1(2);
+end
+ 
+% Absolute values of c, k and z
+c = dc + P.cSS;
+k = dk + P.kss;
+x = dx ;
 
-PI = inv(A)*B;
-[V,D] = eig(PI);
-abs(eig(PI))
+yss = (adp.*kss.^(1+((P.alpha-1)/(P.phi-P.alpha)))).^(P.alpha);
+y = exp(x).^(1-P.alpha).*(adp.*exp(((1-P.alpha).*x)/(P.phi-P.alpha)).*k.^(1+((P.alpha-1)/(P.phi-P.alpha)))).^(P.alpha);
+
+subplot(2,2,1);
+plot(0:T,dc,[0,T],[0 0]);
+title('consumption')
+xlabel('time t');
+
+subplot(2,2,2);
+plot(0:T,dk,[0,T],[0 0]);
+title('capital')
+xlabel('time t');
+
+subplot(2,2,3);
+plot(0:T,dx,[0,T],[0 0]);
+title('TFP')
+xlabel('time t');
+
+subplot(2,2,4);
+plot(0:T,y-ybar,[0,T],[0 0]);
+title('production')
+xlabel('time t');
+
+
+

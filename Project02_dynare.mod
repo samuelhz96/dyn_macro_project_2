@@ -1,7 +1,7 @@
 % 1. Declarations
 %--------------------------------------------------------------------------
 
-var k,U,c,x;
+var k,c,x;
 varexo e;
 parameters beta,alpha,delta,phi,rho;
 
@@ -20,9 +20,8 @@ rho = 0.9;
 %--------------------------------------------------------------------------
 
 model;
-c(+1) = beta*c*(alpha*exp((1-alpha)*x(+1))*U(+1)^(alpha)*k(+1)^(alpha-1)+1-delta*U(+1)^phi);
-U = (alpha/(delta*phi))^(1/(phi-alpha))*exp(((1-alpha)/(phi-alpha))*x)*k^((alpha-1)/(phi-alpha));
-k = exp((1-alpha)*x(-1))*(k(-1)*U(-1))^(alpha)+(1-delta*U(-1)^phi)*k(-1)-c(-1);
+c(+1) = beta*c*(alpha*exp((1-alpha)*x(+1))*((alpha/(delta*phi))^(1/(phi-alpha))*exp(((1-alpha)/(phi-alpha))*x(+1))*k(+1)^((alpha-1)/(phi-alpha)))^(alpha)*k(+1)^(alpha-1)+1-delta*((alpha/(delta*phi))^(1/(phi-alpha))*exp(((1-alpha)/(phi-alpha))*x(+1))*k(+1)^((alpha-1)/(phi-alpha)))^phi);
+k = exp((1-alpha)*x(-1))*(k(-1)*((alpha/(delta*phi))^(1/(phi-alpha))*exp(((1-alpha)/(phi-alpha))*x(-1))*k(-1)^((alpha-1)/(phi-alpha))))^(alpha)+(1-delta*((alpha/(delta*phi))^(1/(phi-alpha))*exp(((1-alpha)/(phi-alpha))*x(-1))*k(-1)^((alpha-1)/(phi-alpha)))^phi)*k(-1)-c;
 x = rho*x(-1)+e;
 end;
 
@@ -31,7 +30,6 @@ end;
 %--------------------------------------------------------------------------
 
 initval;
-U = 0.6471;
 c = 2.8478;
 k= 60.6232;
 x = 0;
@@ -49,5 +47,5 @@ var e;
 stderr (0.0005)^(0.5);
 end;
 
-stoch_simul(order=1, periods = 1000, irf = 1000);
+stoch_simul(order=1, periods = 1000, irf = 100);
 rplot c k;

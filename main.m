@@ -138,26 +138,72 @@ DF2 = [EE_ctt(kss) EE_ktt(kss) EE_xtt(kss); LMK_ctt(kss) LMK_ktt(kss) LMK_xtt(ks
 % Step 3: Build Jacobian
 Jac = -(inv(DF2))*DF1;
 
-[V,D] = eig(Jac);
+[V,D]           = eig(Jac);               % V = Matrix of eigenvectors, D = diagonal Matrix with eigenvalues on diagonal
+eigvals         = diag(D);              % Retireives eigenvalues from D and stores them in a vector 
+idx_stable      = find(abs(eigvals)<1); % Index of stable eigenvalues (eigenvalues with |lambda| < 1)
+eigvals_stable  = eigvals(idx_stable);  % Retrieves only stable eigenvalues fromv vecotr
+eigvecs_stable  = V(:,idx_stable);      % Retrieves corresponding egenvectors
 
-eigvals         = diag(D);              % eigenvalues from D as a vector 
-idx_stable      = find(abs(eigvals)<1); % Index of stable eigenvalues 
-eigvals_stable  = eigvals(idx_stable)   % Retrieves stable eigenvalues fromv vector
-eigvecs_stable  = V(:,idx_stable); 
-    
-ukx_eigvecs = eigvecs_stable(1:2,:);
-c_eigvecs = eigvecs_stable(1,:);
+% Store values in the parameters object:
+P.e1 = eigvals_stable(1);
+P.e2 = eigvals_stable(2);
+P.v1 = eigvecs_stable(:,1);
+P.v2 = eigvecs_stable(:,2);
+P.kss = kss;
+P.cSS = cSS(kss);
+P.zSS = 1;
+
+Gamma_vec_1 = [P.v1(1) P.v2(1)];
+Gamma_vec_2 = [P.v1(2) P.v2(2); P.v1(3) P.v2(3)]
+Gamma_vec = Gamma_vec_1*inv(Gamma_vec_2)
    
-inv_ukx_eigvecs= inv(ukx_eigvecs);
-   
-const1= c_eigvecs*inv_ukx_eigvecs(:,1);
-const2= c_eigvecs*inv_ukx_eigvecs(:,2);
-   
-G1= Jac(2,1).*const1+Jac(2,2)
-G2= Jac(2,1).*const2+Jac(2,3)
+G1= Jac(2,1).*Gamma_vec(1)+Jac(2,2)
+G2= Jac(2,1).*Gamma_vec(2)+Jac(2,3)
 G0 = kss
 
+
+T = 100;
+sigma = (0.0005)^(0.5);
+eps = [sigma zeros(1,T)];            
+dc = nan(1,T+1);
+dk = [0,nan(1,T)];
+dx = [0,nan(1,T)];
+for t=1:T
+    % Do one step and repeat T times
+    [dc1,dk1,dz1] = lineartransition(P,dk(t),dx(t)+eps(t),1); 
     
+    dc([t,t+1]) = dc1;
+    dk(t+1) = dk1(2);
+    dx(t+1) = dz1(2);
+end
+ 
+% Absolute values of c, k and z
+c = dc + P.cSS;
+k = dk + P.kss;
+x = dx ;
+
+yss = (adp.*kss.^(1+((P.alpha-1)/(P.phi-P.alpha)))).^(P.alpha);
+y = exp(x).^(1-P.alpha).*(adp.*exp(((1-P.alpha).*x)/(P.phi-P.alpha)).*k.^(1+((P.alpha-1)/(P.phi-P.alpha)))).^(P.alpha);
+
+subplot(2,2,1);
+plot(0:T,dc,[0,T],[0 0]);
+title('consumption')
+xlabel('time t');
+
+subplot(2,2,2);
+plot(0:T,dk,[0,T],[0 0]);
+title('capital')
+xlabel('time t');
+
+subplot(2,2,3);
+plot(0:T,dx,[0,T],[0 0]);
+title('TFP')
+xlabel('time t');
+
+subplot(2,2,4);
+plot(0:T,y-ybar,[0,T],[0 0]);
+title('production')
+xlabel('time t');
 
 
 

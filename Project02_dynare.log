@@ -1,5 +1,5 @@
 Starting preprocessing of the model file ...
-Found 4 equation(s).
+Found 3 equation(s).
 Evaluating expressions...done
 Computing static model derivatives (order 1).
 Computing dynamic model derivatives (order 1).
@@ -10,35 +10,31 @@ Preprocessing completed.
 STEADY-STATE RESULTS:
 
 k 		 60.6232
-U 		 0.647061
 c 		 2.84776
 x 		 0
 
 EIGENVALUES:
          Modulus             Real        Imaginary
 
-       5.666e-17       -5.666e-17                0
-        8.45e-17         8.45e-17                0
              0.9              0.9                0
-          0.9864           0.9864                0
-           1.021            1.021                0
-       2.137e+34        2.137e+34                0
-             Inf              Inf                0
-             Inf              Inf                0
+          0.9865           0.9865                0
+           1.022            1.022                0
+       6.944e+16        6.944e+16                0
+             Inf             -Inf                0
 
 
-There are 4 eigenvalue(s) larger than 1 in modulus 
-for 4 forward-looking variable(s)
+There are 3 eigenvalue(s) larger than 1 in modulus 
+for 3 forward-looking variable(s)
 
 The rank condition is verified.
 
 
 MODEL SUMMARY
 
-  Number of variables:         4
+  Number of variables:         3
   Number of stochastic shocks: 1
-  Number of state variables:   4
-  Number of jumpers:           4
+  Number of state variables:   2
+  Number of jumpers:           3
   Number of static variables:  0
 
 
@@ -47,34 +43,30 @@ Variables           e
 e            0.000500
 
 POLICY AND TRANSITION FUNCTIONS
-                                   k               U               c               x
-Constant                   60.623227        0.647061        2.847763               0
-k(-1)                       1.007417       -0.006037        0.021215               0
-c(-1)                      -1.000000        0.005992       -0.021059               0
-x(-1)                       2.398116        0.312566        0.312371        0.900000
-e                                  0        0.363262        0.290967        1.000000
+                                   k               c               x
+Constant                   60.623227        2.847763               0
+k(-1)                       0.986470        0.020947               0
+x(-1)                       2.091525        0.306591        0.900000
+e                          -0.285253        0.285253        1.000000
 
 
 MOMENTS OF SIMULATED VARIABLES
 VARIABLE              MEAN       STD. DEV.        VARIANCE        SKEWNESS        KURTOSIS
-k                58.791240        2.422222        5.867159        0.079760        0.085380
-U                 0.653642        0.020063        0.000403       -0.543165        0.785706
-c                 2.805663        0.056948        0.003243        0.106558        0.159185
+k                58.818266        2.381770        5.672827        0.078173        0.083350
+c                 2.805911        0.056437        0.003185        0.103542        0.155361
 x                -0.012101        0.050891        0.002590       -0.035279        0.186763
 
 
 CORRELATION OF SIMULATED VARIABLES
-VARIABLE         k       U       c       x
-k           1.0000 -0.4661  0.9683  0.2793
-U          -0.4661  1.0000 -0.2304  0.7194
-c           0.9683 -0.2304  1.0000  0.5102
-x           0.2793  0.7194  0.5102  1.0000
+VARIABLE         k       c       x
+k           1.0000  0.9675  0.2717
+c           0.9675  1.0000  0.5062
+x           0.2717  0.5062  1.0000
 
 
 AUTOCORRELATION OF SIMULATED VARIABLES
 VARIABLE         1       2       3       4       5
-k           0.9981  0.9955  0.9915  0.9863  0.9800
-U           0.9124  0.8281  0.7449  0.6762  0.6194
-c           0.9925  0.9847  0.9755  0.9661  0.9564
+k           0.9980  0.9955  0.9915  0.9863  0.9800
+c           0.9926  0.9849  0.9759  0.9667  0.9571
 x           0.9020  0.8072  0.7136  0.6358  0.5713
 Total computing time : 0h00m02s
